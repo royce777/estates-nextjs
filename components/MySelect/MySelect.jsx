@@ -6,13 +6,12 @@ const MySelect = (props) => {
         <>
             <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon/>}>
-                    {props.placeholder || 'Choose...'}
+                    {props.locales.find(x => x.value === props.value)?.label || props.placeholder || '🌐'}
 
                 </MenuButton>
-                <MenuList >
+                <MenuList minW="0" >
                     {props.locales.map((item,key) => (
                         <MenuItem key={key} onClick={() => props.onChange(item.value)}>
-                            {console.log(item.label)}
                             {item.label}
                         </MenuItem>
                     ))}

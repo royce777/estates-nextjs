@@ -41,15 +41,15 @@ const NavLink = ({ children, path }) => (
 
 const locales = [
   {
-    label: '🇬🇧',
+    label: '🇬🇧 ENG',
     value : 'en'
   },
   {
-    label: '🇮🇹',
+    label: '🇮🇹 ITA',
     value: 'it'
   },
   {
-    label: '🇷🇺',
+    label: '🇷🇺 RUS',
     value: 'ru'
   }
 ]
@@ -69,7 +69,8 @@ export default function Navbar(){
 
   const setNewLocale = (newValue) => {
     setLocaleVal(newValue)
-    router.push('/', '/', {locale : newValue} )
+    const { pathname, asPath, query } = router
+    router.push({ pathname, query }, asPath, { locale: newValue })
   }
   const Links =  [
         {
@@ -129,7 +130,7 @@ export default function Navbar(){
                       value={localeVal}
                       onChange={(newValue) => setNewLocale(newValue)}
             />
-            <Menu>
+            {/* <Menu>
               <MenuButton
                 as={Button}
                 rounded={"full"}
@@ -149,7 +150,7 @@ export default function Navbar(){
                 <MenuDivider />
                 <MenuItem>Link 3</MenuItem>
               </MenuList>
-            </Menu>
+            </Menu> */}
           </Flex>
         </Flex>
 
