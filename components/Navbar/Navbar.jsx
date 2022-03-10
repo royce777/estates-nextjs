@@ -20,7 +20,6 @@ import {useRouter} from 'next/router'
 import en from './translation/en'
 import it from './translation/it'
 import ru from './translation/ru'
-import navStyles from "./navbar.module.css";
 import MySelect from '../MySelect/MySelect'
 import { useState } from "react";
 
@@ -91,9 +90,9 @@ export default function Navbar(){
         },
   ];
   return (
-    <div className={navStyles.mobileNav}>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+    // <div className={navStyles.mobileNav}>
+      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} width='100%' zIndex={1} position='fixed'>  
+        <Flex h={16} alignItems={"center"} justifyContent={"space-between"} >
           <IconButton
             size={"md"}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -167,6 +166,6 @@ export default function Navbar(){
         ) : null}
       </Box>
 
-    </div>
+    // </div>
   );
 }

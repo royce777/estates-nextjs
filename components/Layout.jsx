@@ -11,7 +11,7 @@ export default function Layout({ children }) {
       </Head>
       <Box m='auto'>
         <header>
-          <Navbar />
+          <Navbar/>
         </header>
         <main>{children}</main>
         <footer>
