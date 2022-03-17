@@ -100,7 +100,7 @@ export default function Navbar(){
             display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <Box>Realtor</Box>
+          <Box fontSize='xl' fontWeight='semibold'>Realtor</Box>
           <HStack spacing={8} alignItems={"center"}
                   justifyContent={"space-between"}>
             <HStack
