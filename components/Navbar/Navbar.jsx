@@ -91,7 +91,7 @@ export default function Navbar(){
   ];
   return (
     // <div className={navStyles.mobileNav}>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} width='100%' zIndex={1} position='fixed'>  
+      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} width='100%' zIndex={3} position='fixed'>  
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"} >
           <IconButton
             size={"md"}
@@ -116,15 +116,17 @@ export default function Navbar(){
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <Button
-              variant={"solid"}
-              colorScheme={"teal"}
-              size={"sm"}
-              mr={4}
-              leftIcon={<AddIcon />}
-            >
-              Action
-            </Button>
+            <Link href="/newestate">
+              <Button
+                variant={"solid"}
+                colorScheme={"teal"}
+                size={"sm"}
+                mr={4}
+                leftIcon={<AddIcon />}
+              >
+              Add 
+              </Button>
+            </Link>
             <MySelect locales={locales} 
                       value={localeVal}
                       onChange={(newValue) => setNewLocale(newValue)}
