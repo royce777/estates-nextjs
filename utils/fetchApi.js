@@ -7,3 +7,8 @@ export const fetchApi = async (url) => {
 
   return data;
 };
+
+export const postApi = async (url, estate_data) => {
+  const response = await axios.post(url, estate_data);
+  return response;
+};

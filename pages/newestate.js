@@ -1,16 +1,20 @@
-import { Text, Center, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import { Text, Center, Button, useRadio } from "@chakra-ui/react";
 import CheckBoxForm from "../components/NewEstateForm/CheckBoxForm";
 import DescriptionsForm from "../components/NewEstateForm/DescriptionsForm";
 import MainPropsForm from "../components/NewEstateForm/MainProps";
 import _ from "lodash";
-import ImageUpload from "../components/ImgUpload/ImageUpload";
+import ImgUploadForm from "../components/ImgUpload/ImageUploadForm";
+import { useState } from "react";
+import { storage } from "../firebase/index";
+import { baseUrl, postApi } from "../utils/fetchApi";
 
+// TODO : Validate forms !!!
 export default function Newestate() {
+  // logic to handle main properties of an estate
   const [mainProps, setMainProps] = useState({
     name: "",
     ref_id: "",
-    location: "",
+    location: "Forte dei Marmi",
     area: -1,
     rooms: -1,
     bedrooms: -1,
@@ -65,6 +69,7 @@ export default function Newestate() {
     }
   };
 
+  // to handle extra features
   const [extraFeatures, setExtraFeatures] = useState({
     pool: false,
     ac: false,
@@ -89,8 +94,84 @@ export default function Newestate() {
     veranda: false,
   });
 
-  const handleChecked = (e) => {
-    setExtraFeatures({ ...extraFeatures, [e.target.name]: e.target.checked });
+  const handleChecked = _.debounce((e) => {
+    setExtraFeatures({ ...extraFeatures, [e.target.name]: e.target.checked }),
+      200;
+  });
+
+  //  to handle images
+  const [urls, setUrls] = useState([]);
+  const [progress, setProgress] = useState(0);
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const onSelectFile = (e) => {
+    const files = e.target.files;
+    const selectedFilesArray = Array.from(files);
+    const imagesWithLocalUrls = selectedFilesArray.map((file) => {
+      return URL.createObjectURL(file);
+    });
+    setSelectedImages((previousImages) =>
+      previousImages.concat(imagesWithLocalUrls)
+    );
+    setSelectedFiles((prevFiles) => prevFiles.concat(selectedFilesArray));
+  };
+
+  const handleUpload = () => {
+    const promises = [];
+    selectedFiles.map((image) => {
+      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+      const promise = new Promise((resolve, reject) => {
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            setProgress(progress);
+          },
+          (error) => {
+            console.log(error);
+            reject(error);
+          },
+          async () => {
+            await storage
+              .ref("images")
+              .child(image.name)
+              .getDownloadURL()
+              .then((url) => {
+                setUrls(urls.push(url));
+                resolve();
+              })
+              .catch((error) => {
+                reject(error);
+              });
+          }
+        );
+      });
+      promises.push(promise);
+    });
+
+    return promises;
+  };
+
+  const submitForm = async () => {
+    // convert descriptions object into array
+    const des = description;
+    const descriptions = [];
+    descriptions.push(des.en, des.ru, des.it);
+
+    // upload images to firebase
+    const promises = handleUpload();
+    // convert image urls array to necessary format for submission
+    await Promise.all(promises);
+    const images = [];
+    urls.map((url) => {
+      images.push({ url: url });
+    });
+    mainProps.description = descriptions;
+    mainProps.features = extraFeatures;
+    mainProps.images = images;
+    const response = postApi(`${baseUrl}/estates/0`, mainProps);
   };
 
   return (
@@ -103,16 +184,21 @@ export default function Newestate() {
       <MainPropsForm handleMainPropsChange={handleMainPropsChange} />
       <DescriptionsForm handleDescriptionsChange={handleDescriptionsChange} />
       <CheckBoxForm handleChecked={handleChecked} />
-      <ImageUpload />
-      <Button
-        onClick={() => {
-          console.log(mainProps);
-          console.log(description);
-          console.log(extraFeatures);
-        }}
-      >
-        Print features
-      </Button>
+      <ImgUploadForm
+        onSelectFile={onSelectFile}
+        selectedImages={selectedImages}
+      />
+      <Center>
+        <Button
+          onClick={async () => {
+            console.log("FINAL");
+            await submitForm();
+            console.log(mainProps);
+          }}
+        >
+          Submit
+        </Button>
+      </Center>
     </>
   );
 }
