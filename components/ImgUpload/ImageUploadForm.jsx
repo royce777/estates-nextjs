@@ -2,7 +2,7 @@ import { SmallCloseIcon } from "@chakra-ui/icons";
 import { FormLabel, Flex, Input, Alert, AlertIcon, Button, SimpleGrid, Box, IconButton, Container} from "@chakra-ui/react";
 import Image from "next/image";
 
-const ImgUploadForm = ({ onSelectFile, selectedImages}) => {
+const ImgUploadForm = ({ onSelectFile, selectedImages, setSelectedImages}) => {
     return (
         <>
         <Flex paddingTop='10' flexDirection='column' justifyContent='center' alignItems='center'>

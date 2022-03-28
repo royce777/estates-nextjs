@@ -41,8 +41,9 @@ const Search = ({ properties }) => {
         paddingRight="50"
         paddingLeft="50"
       >
-        {properties.map((property) => (
+        {properties.map((property, index) => (
           <Flex
+            key={index}
             justifyContent="center"
             paddingRight="10"
             paddingLeft="10"

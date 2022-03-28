@@ -187,6 +187,7 @@ export default function Newestate() {
       <ImgUploadForm
         onSelectFile={onSelectFile}
         selectedImages={selectedImages}
+        setSelectedImages={setSelectedImages}
       />
       <Center>
         <Button
