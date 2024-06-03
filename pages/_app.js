@@ -1,18 +1,21 @@
 import Layout from "../components/Layout";
 import { ChakraProvider } from "@chakra-ui/react";
-import Router from "next/router";
 import Head from "next/head";
 import { appWithTranslation } from "next-i18next";
+import { UserProvider } from "../context/UserContext"; // Import UserProvider
+
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Head></Head>
-      <ChakraProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ChakraProvider>
+      <Head />
+      <UserProvider>
+        <ChakraProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ChakraProvider>
+      </UserProvider>
     </>
   );
 }

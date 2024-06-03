@@ -17,7 +17,7 @@ const MySlider = ({t}) => {
         <Box width='100%' position='absolute'>
             <Center>
             <Text fontSize='50px' color='white' align='center'>
-             {t('home:welcome_msg', {app_name: 'Realtor'})} 
+             {t('home:welcome_msg', {app_name: 'HarmonyHome'})} 
             </Text>
             </Center>
             <Center> 

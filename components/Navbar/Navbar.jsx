@@ -16,12 +16,13 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 import Link from "next/link";
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 import en from './translation/en'
 import it from './translation/it'
 import ru from './translation/ru'
 import MySelect from '../MySelect/MySelect'
 import { useState } from "react";
+import { useUser } from '../../context/UserContext';
 
 
 const NavLink = ({ children, path }) => (
@@ -41,7 +42,7 @@ const NavLink = ({ children, path }) => (
 const locales = [
   {
     label: '🇬🇧 ENG',
-    value : 'en'
+    value: 'en'
   },
   {
     label: '🇮🇹 ITA',
@@ -59,63 +60,66 @@ const selectLocale = (locale) => {
   else return en;
 }
 
-export default function Navbar(){
+
+export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter()
-  const {locale} = router;
+  const { locale } = router;
   const t = selectLocale(locale)
   const [localeVal, setLocaleVal] = useState(locale)
+  const { isAdmin } = useUser();
 
   const setNewLocale = (newValue) => {
     setLocaleVal(newValue)
     const { pathname, asPath, query } = router
     router.push({ pathname, query }, asPath, { locale: newValue })
   }
-  const Links =  [
-        {
-          name: t.home,
-          path: "/",
-        },
-        {
-          name: t.search,
-          path: "/search",
-        },
-        {
-          name: t.fdm,
-          path: "/fdm"
-        },
-        {
-          name: t.contact,
-          path: "/contact",
-        },
+  const Links = [
+    {
+      name: t.home,
+      path: "/",
+    },
+    {
+      name: t.search,
+      path: "/search",
+    },
+    {
+      name: t.fdm,
+      path: "/fdm"
+    },
+    {
+      name: t.contact,
+      path: "/contact",
+    },
   ];
   return (
     // <div className={navStyles.mobileNav}>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} width='100%' zIndex={3} position='fixed'>  
-        <Flex h={16} alignItems={"center"} justifyContent={"space-between"} >
-          <IconButton
-            size={"md"}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label={"Open Menu"}
-            display={{ md: "none" }}
-            onClick={isOpen ? onClose : onOpen}
-          />
-          <Box fontSize='xl' fontWeight='semibold'>Realtor</Box>
-          <HStack spacing={8} alignItems={"center"}
-                  justifyContent={"space-between"}>
-            <HStack
-              as={"nav"}
-              spacing={4}
-              display={{ base: "none", md: "flex" }}            
-            >
-              {Links.map(({ name, path }) => (
-                <NavLink key={path} path={path}>
-                  {name}
-                </NavLink>
-              ))}
-            </HStack>
+    <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} width='100%' zIndex={3} position='fixed'>
+      <Flex h={16} alignItems={"center"} justifyContent={"space-between"} >
+        <IconButton
+          size={"md"}
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          aria-label={"Open Menu"}
+          display={{ md: "none" }}
+          onClick={isOpen ? onClose : onOpen}
+        />
+        <Box fontSize='xl' fontWeight='semibold'>HarmonyHome</Box>
+        <HStack spacing={8} alignItems={"center"}
+          justifyContent={"space-between"}>
+          <HStack
+            as={"nav"}
+            spacing={4}
+            display={{ base: "none", md: "flex" }}
+          >
+            {Links.map(({ name, path }) => (
+              <NavLink key={path} path={path}>
+                {name}
+              </NavLink>
+            ))}
           </HStack>
-          <Flex alignItems={"center"}>
+        </HStack>
+        <Flex alignItems={"center"}>
+          {isAdmin &&
             <Link href="/newestate">
               <Button
                 variant={"solid"}
@@ -124,14 +128,15 @@ export default function Navbar(){
                 mr={4}
                 leftIcon={<AddIcon />}
               >
-              Add 
+                Add
               </Button>
             </Link>
-            <MySelect locales={locales} 
-                      value={localeVal}
-                      onChange={(newValue) => setNewLocale(newValue)}
-            />
-            {/* <Menu>
+          }
+          <MySelect locales={locales}
+            value={localeVal}
+            onChange={(newValue) => setNewLocale(newValue)}
+          />
+          {/* <Menu>
               <MenuButton
                 as={Button}
                 rounded={"full"}
@@ -152,21 +157,21 @@ export default function Navbar(){
                 <MenuItem>Link 3</MenuItem>
               </MenuList>
             </Menu> */}
-          </Flex>
         </Flex>
+      </Flex>
 
-        {isOpen ? (
-          <Box pb={4} display={{ md: "none" }}>
-            <Stack as={"nav"} spacing={4}>
-              {Links.map(({ name, path }) => (
-                <NavLink key={path} path={path}>
-                  {name}
-                </NavLink>
-              ))}
-            </Stack>
-          </Box>
-        ) : null}
-      </Box>
+      {isOpen ? (
+        <Box pb={4} display={{ md: "none" }}>
+          <Stack as={"nav"} spacing={4}>
+            {Links.map(({ name, path }) => (
+              <NavLink key={path} path={path}>
+                {name}
+              </NavLink>
+            ))}
+          </Stack>
+        </Box>
+      ) : null}
+    </Box>
 
     // </div>
   );
