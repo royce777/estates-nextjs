@@ -1,1 +1,6 @@
-{"contact_button":"Связаться с нами","fdm_button":"Форте дей Марми","home_button":"Дома","search_button":"Поиск"}
+{
+    "contact_button": "Контакты",
+    "fdm_button": "Форте дей Марми",
+    "home_button": "Главная",
+    "search_button": "Поиск"
+}

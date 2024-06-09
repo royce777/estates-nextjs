@@ -1,9 +1,7 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Flex, Box, Text, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import MySlider from "../components/MySlider/MySlider";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
 export default function Home() {
   const { t } = useTranslation();

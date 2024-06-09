@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Flex, Box, Text, Icon } from "@chakra-ui/react";
@@ -8,11 +8,20 @@ import EstateCard from "../components/EstateCard/EstateCard";
 import SearchFilters from "../components/SearchFilters";
 import { baseUrl, fetchApi } from "../utils/fetchApi";
 import noresult from "../public/images/noresult.svg";
+import { useUser } from "../context/UserContext";
 
-const Search = ({ properties }) => {
+const Search = ({ authorized, properties }) => {
   const [searchFilters, setSearchFilters] = useState(false);
   const router = useRouter();
+  const { isAdmin, setIsAdmin } = useUser();
   console.log(properties);
+  console.log("Authorized: ", authorized);
+  useEffect(() => {
+    if (!authorized) {
+      setIsAdmin(false);
+      localStorage.setItem('isAdmin', false);
+    }
+  }, [authorized]);
 
   return (
     <Box paddingTop="70px">
@@ -89,10 +98,18 @@ export async function getServerSideProps({ query }) {
     `${baseUrl}/search?listing_type=${listingType}&location=${location}&bedrooms=${bedrooms}&bathrooms=${bathrooms}&beds=${beds}&sea_dist=${seaDist}&area=${area}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`
   );
 
+  // TODO: Remove this test code
+  let authorized = true;
+  if (data.status === 401) {
+    authorized = false;
+  }
+
+  console.log("DATA: ");
   console.log(data);
   return {
     props: {
-      properties: data?.estates,
+      authorized: authorized,
+      properties: data.estates || [],
     },
   };
 }

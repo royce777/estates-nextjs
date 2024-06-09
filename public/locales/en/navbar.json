@@ -1,1 +1,6 @@
-{"contact_button":"Contact us","fdm_button":"Forte dei Marmi","home_button":"Home","search_button":"Search"}
+{
+    "contact_button": "Contact us",
+    "fdm_button": "Forte dei Marmi",
+    "home_button": "Home",
+    "search_button": "Search"
+}
