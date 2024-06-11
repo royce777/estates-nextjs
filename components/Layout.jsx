@@ -1,22 +1,26 @@
 import Head from 'next/head';
-import { Box } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 import Navbar from './Navbar/Navbar';
+import Footer from './Footer/Footer';
 
 export default function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>Real Estate</title>
+        <title>HarmonyHome</title>
       </Head>
-      <Box m='auto'>
+      <Flex direction="column" minH="100vh">
         <header>
           <Navbar/>
         </header>
-        <main>{children}</main>
+        <Flex as="main" flex="1" direction="column">
+          {children}
+        </Flex>
         <footer>
+          <Footer/>
         </footer>
-      </Box>
+      </Flex>
     </>
   );
 }
