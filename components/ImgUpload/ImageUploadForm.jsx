@@ -56,7 +56,7 @@ const ImgUploadForm = ({ onSelectFile, selectedImages, setSelectedImages}) => {
             >
             {selectedImages.map((image,index) => {
                 return (<Box key={index} position='relative' maxWidth='500px' maxHeight='280px' borderRadius='20px' overflow='hidden'>
-                            <Image src={image} width='500px' height='280px' layout='responsive' />
+                            <Image src={image} width={500} height={280} layout='responsive' />
                             <Box position='absolute' top='0' right='0'>
                                 <IconButton 
                                         icon={<SmallCloseIcon/>} 

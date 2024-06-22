@@ -15,6 +15,6 @@ export const fetchApi = async (url) => {
 };
 
 export const postApi = async (url, estate_data) => {
-  const response = await axios.post(url, estate_data);
+  const response = await axios.post(url, estate_data, {withCredentials: true});
   return response;
 };

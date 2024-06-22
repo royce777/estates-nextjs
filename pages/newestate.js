@@ -139,7 +139,9 @@ export default function Newestate() {
               .child(image.name)
               .getDownloadURL()
               .then((url) => {
-                setUrls(urls.push(url));
+                setUrls(prevUrls => {
+                  return [...prevUrls, url];
+                });
                 resolve();
               })
               .catch((error) => {

@@ -25,7 +25,7 @@ export default function EstateCard(){
         <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
       {/* <Image src={property.imageUrl} alt={property.imageAlt} layout='fill' /> */}
 
-      <Image loader={() => property.imageUrl} src={property.imageUrl} alt='alt' width='400px' height='300px'/>
+      <Image loader={() => property.imageUrl} src={property.imageUrl} alt='alt' width={400} height={300}/>
 
       <Box p='6' paddingTop='0'>
 
