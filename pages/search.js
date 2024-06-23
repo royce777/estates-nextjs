@@ -58,7 +58,7 @@ const Search = ({ authorized, properties }) => {
             paddingLeft="10"
             paddingBottom="8"
           >
-            <EstateCard estate={property} />
+            <EstateCard property={property} />
           </Flex>
         ))}
       </Flex>
