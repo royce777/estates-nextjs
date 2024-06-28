@@ -2,6 +2,7 @@ import { Box, Badge, Icon, Flex, Text, Center, Divider } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useEffect } from 'react'
 import { FaBed, FaBath, FaHome, FaUmbrellaBeach, FaBorderAll } from 'react-icons/fa'
+import Link from "next/link";
 
 
 export default function EstateCard({ property }) {
@@ -34,12 +35,13 @@ export default function EstateCard({ property }) {
 
       <Image loader={() => imageUrl} src={imageUrl} alt='alt' width={400} height={300} />
 
-      <Box p='6' paddingTop='0'>
+      <Box p='3'>
 
-        <Text fontSize='xl' fontWeight='semibold'>{property.name} </Text>
+        <Link href={`/estate/${property.id}`}>
+          <Text fontSize='xl' fontWeight='semibold'>{property.name} </Text>
+        </Link>
 
         <Box
-          mt='1'
           as='h4'
           lineHeight='tight'
           isTruncated

@@ -1,4 +1,4 @@
-import { Box, Container, HStack, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Container, HStack, SimpleGrid, Text, Center } from "@chakra-ui/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { baseUrl, fetchApi } from "../../utils/fetchApi";
@@ -38,136 +38,127 @@ const EstateDetails = ({
 }) => {
   return (
     <>
-      <Box
-        paddingRight={{
-          base: "20px",
-          sm: "50px",
-          md: "100px",
-          lg: "200px",
-          xl: "300px",
-        }}
-        paddingLeft={{
-          base: "20px",
-          sm: "50px",
-          md: "100px",
-          lg: "200px",
-          xl: "300px",
-        }}
-        paddingTop="70px"
-      >
-        <HStack justify="space-between">
-          <Text fontSize="3xl" p="3">
-            Villa bifamiliare Roma Imperiale
-          </Text>
-          <Text fontSize="2xl" p="3">
-            REF-ID: {ref_id}
-          </Text>
-        </HStack>
-        <Box display="flex" p="3">
-          <Box paddingRight="2" paddingLeft="1">
-            <FaPeriscope size="18" />
-          </Box>
-          {location}
-        </Box>
-        {images.length > 0 && (
-          <Carousel infiniteLoop autoPlay swipeable={true} showThumbs={true}>
-            {images.map((img, index) => (
-              <Container key={index} maxWidth="1920px" maxHeight="600px">
-                {/* <Image src={img.url} height="600px" width="1180px" fit="none" /> */}
-                <img
-                  src={img.url}
-                  // style={{ maxHeight: "100%", maxWidth: "100%" }}
-                />
-              </Container>
-            ))}
-          </Carousel>
-        )}
-
-        <Text p="5" fontSize="lg" fontWeight="bold">
-          {" "}
-          Summary
-        </Text>
-        <SimpleGrid
-          paddingTop="10px"
-          bg="gray.50"
-          rounded="lg"
-          color="gray.500"
-          shadow="dark-lg"
-          spacing="6"
-          columns={{ base: 1, sm: 2, md: 3 }}
-          fontSize="lg"
-          textAlign="center"
-          p="5"
-        >
-          <Box display="flex" justifyContent="center" paddingRight="3">
-            <Box paddingRight="2">
-              <FaBed size="20" />
-            </Box>
-            Bedrooms: {bedrooms}
-          </Box>
-          <Box display="flex" justifyContent="center" paddingRight="3">
-            <Box paddingRight="2" paddingLeft="1">
-              <FaBath size="18" />
-            </Box>
-            Bathrooms: {bathrooms}
-          </Box>
-          <Box display="flex" justifyContent="center" paddingRight="3">
-            <Box paddingRight="2" paddingLeft="1">
-              <FaUsers size="18" />
-            </Box>
-            Beds: {beds}
-          </Box>
-          <Box display="flex" justifyContent="center" paddingRight="3">
-            <Box paddingRight="2" paddingLeft="1">
-              <BsDoorClosed size="18" />
-            </Box>
-            Rooms: {rooms}
-          </Box>
-          {/* SECOND ROW OF ICON PROPS */}
-          <Box display="flex" justifyContent="center" paddingRight="3">
-            <Box paddingRight="2">
-              <FaUmbrellaBeach size="18" />
-            </Box>
-            Beach: {sea_dist} m
-          </Box>
-          <Box display="flex" justifyContent="center" paddingRight="3">
-            <Box paddingRight="2">
-              <FaBorderAll size="18" />
-            </Box>
-            Area: {area} sq.m
-          </Box>
-        </SimpleGrid>
-        <Text p="5" fontSize="lg" fontWeight="bold">
-          {" "}
-          Description
-        </Text>
+      <Center>
         <Box
-          paddingTop="10px"
-          bg="gray.50"
-          rounded="lg"
-          color="black"
-          shadow="dark-lg"
-          textAlign="center"
+          paddingLeft={{ base: "30px" }}
+          paddingRight={{ base: "30px" }}
+          paddingTop="70px"
+          maxWidth={{ base: "1000px" }}
         >
-          {description.map((desc, index) => {
-            if (desc.lang === "en")
-              return (
-                <Text p="3">
-                  Irure excepteur veniam labore dolore quis exercitation dolor
-                  dolor. Lorem do voluptate ad tempor ex exercitation eu qui
-                  duis id. Eiusmod incididunt sunt nostrud deserunt nisi
-                  exercitation. Cillum aliquip esse quis irure. Duis id magna ea
-                  ut quis eiusmod eiusmod ea labore minim. Ipsum eiusmod est id
-                  labore in exercitation.
-                </Text>
-              );
-          })}
+          <HStack justify="space-between">
+            <Text fontSize="3xl" p="3">
+              Villa bifamiliare Roma Imperiale
+            </Text>
+            <Text fontSize="2xl" p="3">
+              REF-ID: {ref_id}
+            </Text>
+          </HStack>
+          <Box display="flex" p="3">
+            <Box paddingRight="2" paddingLeft="1">
+              <FaPeriscope size="18" />
+            </Box>
+            {location}
+          </Box>
+          {images.length > 0 && (
+            <Carousel infiniteLoop autoPlay swipeable={true} showThumbs={true}>
+              {images.map((img, index) => (
+                <Container key={index} maxWidth="1000px" maxHeight="600px">
+                  {/* <Image src={img.url} height="600px" width="1180px" fit="none" /> */}
+                  <img
+                    src={img.url}
+                  // style={{ maxHeight: "100%", maxWidth: "100%" }}
+                  />
+                </Container>
+              ))}
+            </Carousel>
+          )}
+
+          <Text p="5" fontSize="lg" fontWeight="bold">
+            {" "}
+            Summary
+          </Text>
+          <SimpleGrid
+            paddingTop="10px"
+            bg="gray.50"
+            rounded="lg"
+            color="gray.500"
+            shadow="dark-lg"
+            spacing="6"
+            columns={{ base: 1, sm: 2, md: 3 }}
+            fontSize="lg"
+            textAlign="center"
+            p="5"
+          >
+            <Box display="flex" justifyContent="center" paddingRight="3">
+              <Box paddingRight="2">
+                <FaBed size="20" />
+              </Box>
+              Bedrooms: {bedrooms}
+            </Box>
+            <Box display="flex" justifyContent="center" paddingRight="3">
+              <Box paddingRight="2" paddingLeft="1">
+                <FaBath size="18" />
+              </Box>
+              Bathrooms: {bathrooms}
+            </Box>
+            <Box display="flex" justifyContent="center" paddingRight="3">
+              <Box paddingRight="2" paddingLeft="1">
+                <FaUsers size="18" />
+              </Box>
+              Beds: {beds}
+            </Box>
+            <Box display="flex" justifyContent="center" paddingRight="3">
+              <Box paddingRight="2" paddingLeft="1">
+                <BsDoorClosed size="18" />
+              </Box>
+              Rooms: {rooms}
+            </Box>
+            {/* SECOND ROW OF ICON PROPS */}
+            <Box display="flex" justifyContent="center" paddingRight="3">
+              <Box paddingRight="2">
+                <FaUmbrellaBeach size="18" />
+              </Box>
+              Beach: {sea_dist} m
+            </Box>
+            <Box display="flex" justifyContent="center" paddingRight="3">
+              <Box paddingRight="2">
+                <FaBorderAll size="18" />
+              </Box>
+              Area: {area} sq.m
+            </Box>
+          </SimpleGrid>
+          <Text p="5" fontSize="lg" fontWeight="bold">
+            {" "}
+            Description
+          </Text>
+          <Box
+            paddingTop="10px"
+            bg="gray.50"
+            rounded="lg"
+            color="black"
+            shadow="dark-lg"
+            textAlign="center"
+          >
+            {description.map((desc, index) => {
+              if (desc.lang === "en")
+                return (
+                  <Text p="3">
+                    Irure excepteur veniam labore dolore quis exercitation dolor
+                    dolor. Lorem do voluptate ad tempor ex exercitation eu qui
+                    duis id. Eiusmod incididunt sunt nostrud deserunt nisi
+                    exercitation. Cillum aliquip esse quis irure. Duis id magna ea
+                    ut quis eiusmod eiusmod ea labore minim. Ipsum eiusmod est id
+                    labore in exercitation.
+                  </Text>
+                );
+            })}
+          </Box>
+          <Text p="5" fontSize="lg" fontWeight="bold">
+            {" "}
+            Services
+          </Text>
         </Box>
-        <Text p="5" fontSize="lg" fontWeight="bold">
-          {" "}
-          Services
-        </Text>
-      </Box>
+      </Center>
     </>
   );
 };
