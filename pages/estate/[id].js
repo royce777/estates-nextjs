@@ -2,7 +2,7 @@ import { Box, Container, HStack, SimpleGrid, Text, Center } from "@chakra-ui/rea
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { baseUrl, fetchApi } from "../../utils/fetchApi";
-import { BsDoorClosed } from "react-icons/bs";
+import { BsDoorClosed, BsCheck2Circle } from "react-icons/bs";
 import {
   FaBath,
   FaBed,
@@ -11,6 +11,7 @@ import {
   FaUmbrellaBeach,
   FaUsers,
 } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
 const EstateDetails = ({
   estateDetails: {
@@ -36,6 +37,17 @@ const EstateDetails = ({
     images,
   },
 }) => {
+
+  useEffect(() => {
+    const featNames = getFeatureNames(features);
+    setFeatureNames(featNames);
+  }, []);
+
+  const [featureNames, setFeatureNames] = useState([]);
+
+  const getFeatureNames = (features) => {
+    return Object.keys(features).filter(key => features[key] === true);
+  };
   return (
     <>
       <Center>
@@ -43,14 +55,15 @@ const EstateDetails = ({
           paddingLeft={{ base: "30px" }}
           paddingRight={{ base: "30px" }}
           paddingTop="70px"
+          paddingBottom={{ base: "30px" }}
           maxWidth={{ base: "1000px" }}
         >
           <HStack justify="space-between">
             <Text fontSize="3xl" p="3">
-              Villa bifamiliare Roma Imperiale
+              {name}
             </Text>
             <Text fontSize="2xl" p="3">
-              REF-ID: {ref_id}
+              {ref_id}
             </Text>
           </HStack>
           <Box display="flex" p="3">
@@ -157,6 +170,29 @@ const EstateDetails = ({
             {" "}
             Services
           </Text>
+          <SimpleGrid
+            paddingTop="10px"
+            bg="gray.50"
+            rounded="lg"
+            color="gray.500"
+            shadow="dark-lg"
+            spacing="6"
+            columns={{ base: 1, sm: 2, md: 3 }}
+            fontSize="lg"
+            textAlign="center"
+            p="5"
+          >
+            {featureNames.map((feat, index) => {
+              return (
+                <Box display="flex" justifyContent="center" paddingRight="3">
+                  <Box paddingRight="2">
+                    <BsCheck2Circle size="20" />
+                  </Box>
+                  {feat}
+                </Box>
+              );
+            })}
+          </SimpleGrid>
         </Box>
       </Center>
     </>
