@@ -4,12 +4,13 @@ import DescriptionsForm from "../components/NewEstateForm/DescriptionsForm";
 import MainPropsForm from "../components/NewEstateForm/MainProps";
 import _ from "lodash";
 import ImgUploadForm from "../components/ImgUpload/ImageUploadForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { storage } from "../firebase/index";
 import { baseUrl, postApi } from "../utils/fetchApi";
 
 // TODO : Validate forms !!!
 export default function Newestate() {
+
   // logic to handle main properties of an estate
   const [mainProps, setMainProps] = useState({
     name: "",
@@ -28,13 +29,14 @@ export default function Newestate() {
     floors: -1,
     price: -1,
     m_rate: -1,
-    category: "Apartment",
+    category: "apartment",
   });
 
   const handleMainPropsChange = _.debounce(
     (e) => setMainProps({ ...mainProps, [e.target.name]: e.target.value }),
     200
   );
+
   const [description, setDescription] = useState({
     en: {
       lang: "en",

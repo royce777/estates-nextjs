@@ -23,7 +23,7 @@ export default function SearchFilters() {
     const values = getFilterValues(filterValues)
 
     values.forEach((item) => {
-      if(item.value && filterValues?.[item.name]) {
+      if (item.value && filterValues?.[item.name]) {
         query[item.name] = item.value
       }
     })
@@ -58,10 +58,14 @@ export default function SearchFilters() {
         </Box>
       ))}
       <Flex flexDir='column'>
-        <Button onClick={() => setShowLocations(!showLocations)} border='1px' borderColor='gray.200' marginTop='2' >
-          Search Location
-        </Button>
-        {showLocations && (
+        {
+          /*
+          <Button onClick={() => setShowLocations(!showLocations)} border='1px' borderColor='gray.200' marginTop='2' >
+            Search Location
+          </Button>
+          */
+        }
+        { /* showLocations && (
           <Flex flexDir='column' pos='relative' paddingTop='2'>
             <Input
               placeholder='Type Here'
@@ -109,7 +113,7 @@ export default function SearchFilters() {
               </Box>
             )}
           </Flex>
-        )}
+        ) */}
       </Flex>
     </Flex>
   );
