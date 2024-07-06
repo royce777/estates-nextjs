@@ -1,15 +1,10 @@
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
   IconButton,
   Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
+  useOutsideClick,
   useDisclosure,
   useColorModeValue,
   Stack,
@@ -21,23 +16,36 @@ import en from './translation/en'
 import it from './translation/it'
 import ru from './translation/ru'
 import MySelect from '../MySelect/MySelect'
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useUser } from '../../context/UserContext';
 
 
-const NavLink = ({ children, path }) => (
-  <Box
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-  >
-    <Link href={path}>{children}</Link>
-  </Box>
-);
+const NavLink = ({ children, path, router, isOpen, onClose }) => {
+
+  const handleClick = (e) => {
+    if (isOpen) {
+      e.preventDefault();
+      router.push(path);
+      onClose();
+    }
+  };
+  return (
+    <Box
+      px={2}
+      py={1}
+      rounded={"md"}
+      _hover={{
+        textDecoration: "none",
+        bg: useColorModeValue("gray.200", "gray.700"),
+      }}
+    >
+      <Link href={path} onClick={handleClick}>
+        {children}
+      </Link>
+    </Box>
+  );
+}
+
 
 const locales = [
   {
@@ -68,6 +76,12 @@ export default function Navbar() {
   const t = selectLocale(locale)
   const [localeVal, setLocaleVal] = useState(locale)
   const { isAdmin } = useUser();
+
+  const ref = useRef();
+  useOutsideClick({
+    ref: ref,
+    handler: () => onClose()
+  });
 
   const setNewLocale = (newValue) => {
     setLocaleVal(newValue)
@@ -112,7 +126,7 @@ export default function Navbar() {
             display={{ base: "none", md: "flex" }}
           >
             {Links.map(({ name, path }) => (
-              <NavLink key={path} path={path}>
+              <NavLink key={path} path={path} isOpen={isOpen} router={router} onClose={onClose}>
                 {name}
               </NavLink>
             ))}
@@ -161,10 +175,10 @@ export default function Navbar() {
       </Flex>
 
       {isOpen ? (
-        <Box pb={4} display={{ md: "none" }}>
+        <Box ref={ref} pb={4} display={{ md: "none" }}>
           <Stack as={"nav"} spacing={4}>
             {Links.map(({ name, path }) => (
-              <NavLink key={path} path={path}>
+              <NavLink key={path} path={path} isOpen={isOpen} router={router} onClose={onClose}>
                 {name}
               </NavLink>
             ))}
