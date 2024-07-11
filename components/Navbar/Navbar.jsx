@@ -78,9 +78,14 @@ export default function Navbar() {
   const { isAdmin } = useUser();
 
   const ref = useRef();
+  const buttonRef = useRef();
   useOutsideClick({
     ref: ref,
-    handler: () => onClose()
+    handler: (event) => {
+      if (buttonRef.current && !buttonRef.current.contains(event.target) && isOpen){
+        buttonRef.current.click();
+      }
+    }
   });
 
   const setNewLocale = (newValue) => {
@@ -111,6 +116,7 @@ export default function Navbar() {
     <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} width='100%' zIndex={3} position='fixed'>
       <Flex h={16} alignItems={"center"} justifyContent={"space-between"} >
         <IconButton
+          ref={buttonRef}
           size={"md"}
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
           aria-label={"Open Menu"}
