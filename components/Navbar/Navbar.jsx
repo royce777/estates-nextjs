@@ -7,7 +7,7 @@ import {
   useOutsideClick,
   useDisclosure,
   useColorModeValue,
-  Stack,
+  Stack, Menu, MenuButton, MenuList, MenuItem
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 import Link from "next/link";
@@ -75,14 +75,14 @@ export default function Navbar() {
   const { locale } = router;
   const t = selectLocale(locale)
   const [localeVal, setLocaleVal] = useState(locale)
-  const { isAdmin } = useUser();
+  const { isAdmin, logout } = useUser();
 
   const ref = useRef();
   const buttonRef = useRef();
   useOutsideClick({
     ref: ref,
     handler: (event) => {
-      if (buttonRef.current && !buttonRef.current.contains(event.target) && isOpen){
+      if (buttonRef.current && !buttonRef.current.contains(event.target) && isOpen) {
         buttonRef.current.click();
       }
     }
@@ -136,22 +136,24 @@ export default function Navbar() {
                 {name}
               </NavLink>
             ))}
+            {/* Admin Dropdown */}
+            {isAdmin && (
+              <Menu>
+                <MenuButton as={Button} onClick={() => { }}>
+                  Admin
+                </MenuButton>
+                <MenuList>
+                  <MenuItem onClick={() => router.push("/newestate")}>New</MenuItem>
+                  <MenuItem onClick={async () => {
+                    await logout();
+                    router.push("/");
+                  }}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            )}
           </HStack>
         </HStack>
         <Flex alignItems={"center"}>
-          {isAdmin &&
-            <Link href="/newestate">
-              <Button
-                variant={"solid"}
-                colorScheme={"teal"}
-                size={"sm"}
-                mr={4}
-                leftIcon={<AddIcon />}
-              >
-                Add
-              </Button>
-            </Link>
-          }
           <MySelect locales={locales}
             value={localeVal}
             onChange={(newValue) => setNewLocale(newValue)}
@@ -187,7 +189,23 @@ export default function Navbar() {
               <NavLink key={path} path={path} isOpen={isOpen} router={router} onClose={onClose}>
                 {name}
               </NavLink>
-            ))}
+            ))
+            }
+            {/* Admin Dropdown */}
+            {isAdmin && (
+              <Menu>
+                <MenuButton as={Button} textAlign={{ base: 'start' }} onClick={() => { }}>
+                  Admin
+                </MenuButton>
+                <MenuList>
+                  <MenuItem onClick={() => router.push("/newestate")}>New</MenuItem>
+                  <MenuItem onClick={async () => {
+                    await logout();
+                    router.push("/");
+                  }}>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            )}
           </Stack>
         </Box>
       ) : null}

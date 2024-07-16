@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { baseUrl, postApi } from "../utils/fetchApi";
 
 const UserContext = createContext('user');
 
@@ -10,8 +11,21 @@ export const UserProvider = ({ children }) => {
     setIsAdmin(adminStatus);
   }, []);
 
+  const logout = async () => {
+    try {
+      await postApi(`${baseUrl}/logout`);
+
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+    finally {
+      setIsAdmin(false);
+      localStorage.removeItem('isAdmin');
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ isAdmin, setIsAdmin }}>
+    <UserContext.Provider value={{ isAdmin, setIsAdmin, logout }}>
       {children}
     </UserContext.Provider>
   );

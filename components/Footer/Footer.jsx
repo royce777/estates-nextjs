@@ -12,16 +12,17 @@ const Footer = () => {
         px={{ base: '6', md: '0' }}
       >
         <Text fontSize="lg" fontWeight="bold">
-            HarmonyHome 
+          HarmonyHome
         </Text>
         <Text mt={{ base: 4, md: 0 }} textAlign={{ base: 'center', md: 'right' }}>
           © {new Date().getFullYear()} All rights reserved
         </Text>
-        <Flex mt={{ base: 4, md: 0 }} direction="column" align={{ base: 'center', md: 'flex-end' }}>
-          <Link href="#" mr={{ base: '0', md: '4' }}>
+        <Flex mt={{ base: 4, md: 0 }} direction="column" align={{ base: 'center', md: 'start' }}>
+          <Link href="#">
             Terms of Service
           </Link>
           <Link href="#">Privacy Policy</Link>
+          <Link href="/login">Login</Link>
         </Flex>
       </Flex>
     </Box>
