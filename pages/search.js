@@ -82,20 +82,21 @@ const Search = ({ authorized, properties }) => {
 
 export default Search;
 
-export async function getServerSideProps({ query }) {
-  const listingType = query.listing_type || "";
-  const location = query.location || "Forte dei Marmi";
-  const bedrooms = query.bedrooms || "0";
-  const bathrooms = query.bathrooms || "0";
-  const beds = query.beds || "0";
-  const seaDist = query.sea_dist || "100000";
-  const area = query.area || "0";
-  const category = query.category || "";
-  const minPrice = query.minPrice || "";
-  const maxPrice = query.maxPrice || "";
+export async function getServerSideProps(context) {
+  const listingType = context.query.listing_type || "";
+  const location = context.query.location || "Forte dei Marmi";
+  const bedrooms = context.query.bedrooms || "0";
+  const bathrooms = context.query.bathrooms || "0";
+  const beds = context.query.beds || "0";
+  const seaDist = context.query.sea_dist || "100000";
+  const area = context.query.area || "0";
+  const category = context.query.category || "";
+  const minPrice = context.query.minPrice || "";
+  const maxPrice = context.query.maxPrice || "";
 
   const data = await fetchApi(
-    `${baseUrl}/search?listing_type=${listingType}&location=${location}&bedrooms=${bedrooms}&bathrooms=${bathrooms}&beds=${beds}&sea_dist=${seaDist}&area=${area}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`
+    `${baseUrl}/search?listing_type=${listingType}&location=${location}&bedrooms=${bedrooms}&bathrooms=${bathrooms}&beds=${beds}&sea_dist=${seaDist}&area=${area}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`,
+    context.req.cookies.access_token_cookie
   );
 
   // TODO: Remove this test code
@@ -104,8 +105,8 @@ export async function getServerSideProps({ query }) {
     authorized = false;
   }
 
-  console.log("DATA: ");
-  console.log(data);
+  //console.log("DATA: ");
+  //console.log(data);
   return {
     props: {
       authorized: authorized,

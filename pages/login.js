@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+const https = require('https');
 import { useRouter } from 'next/router';
 import { Text, Center, Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
 
@@ -8,14 +9,18 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false
+  })
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:5000/login', {
+      const response = await axios.post('https://localhost:5000/login', {
         username,
         password,
       },
-        { withCredentials: true });
+        { withCredentials: true, httpsAgent });
 
       if (response.status === 200) {
         localStorage.setItem('isAdmin', true);
