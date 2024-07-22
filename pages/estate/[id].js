@@ -12,6 +12,8 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const EstateDetails = ({
   estateDetails: {
@@ -42,6 +44,8 @@ const EstateDetails = ({
     const featNames = getFeatureNames(features);
     setFeatureNames(featNames);
   }, []);
+
+  const { t } = useTranslation('estateServices');
 
   const [featureNames, setFeatureNames] = useState([]);
 
@@ -184,11 +188,11 @@ const EstateDetails = ({
           >
             {featureNames.map((feat, index) => {
               return (
-                <Box display="flex" justifyContent="center" paddingRight="3">
+                <Box display="flex" justifyContent="center" paddingRight="3" key={index}>
                   <Box paddingRight="2">
                     <BsCheck2Circle size="20" />
                   </Box>
-                  {feat}
+                  {t(feat)}
                 </Box>
               );
             })}
@@ -199,13 +203,17 @@ const EstateDetails = ({
   );
 };
 
-export default EstateDetails;
-export async function getServerSideProps({ params: { id } }) {
+export async function getServerSideProps({ params: { id }, locale }) {
   const data = await fetchApi(`${baseUrl}/estates/${id}`);
+
+  const translations = await serverSideTranslations(locale, ['estateServices']);
 
   return {
     props: {
       estateDetails: data,
+      ...translations
     },
   };
 }
+
+export default EstateDetails;
