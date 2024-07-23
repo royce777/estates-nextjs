@@ -159,7 +159,7 @@ const EstateDetails = ({
             {description.map((desc, index) => {
               if (desc.lang === "en")
                 return (
-                  <Text p="3">
+                  <Text p="3" key={index}>
                     Irure excepteur veniam labore dolore quis exercitation dolor
                     dolor. Lorem do voluptate ad tempor ex exercitation eu qui
                     duis id. Eiusmod incididunt sunt nostrud deserunt nisi
