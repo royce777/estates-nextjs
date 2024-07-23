@@ -21,5 +21,14 @@
     "domotics": "Domotics",
     "terrace": "Terrace",
     "balcony": "Balcony",
-    "veranda": "Veranda"
+    "veranda": "Veranda",
+    "_comment": "Summary section translations follow",
+    "summary": "Summary",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "rooms": "Rooms",
+    "beach": "Beach",
+    "area": "Area",
+    "description": "Description",
+    "services": "Services"
 }

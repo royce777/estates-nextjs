@@ -21,5 +21,14 @@
     "domotics": "Умный Дом",
     "terrace": "Терраса",
     "balcony": "Балкон",
-    "veranda": "Веранда"
+    "veranda": "Веранда",
+    "_comment": "Переводы раздела сводки следуют",
+    "summary": "Сводка",
+    "bedrooms": "Спальни",
+    "bathrooms": "Ванные",
+    "rooms": "Комнаты",
+    "beach": "Пляж",
+    "area": "Площадь",
+    "description": "Описание",
+    "services": "Удобства"
 }

@@ -45,7 +45,7 @@ const EstateDetails = ({
     setFeatureNames(featNames);
   }, []);
 
-  const { t } = useTranslation('estateServices');
+  const { t } = useTranslation('estatePage');
 
   const [featureNames, setFeatureNames] = useState([]);
 
@@ -92,7 +92,7 @@ const EstateDetails = ({
 
           <Text p="5" fontSize="lg" fontWeight="bold">
             {" "}
-            Summary
+            {t('summary')}
           </Text>
           <SimpleGrid
             paddingTop="10px"
@@ -110,43 +110,37 @@ const EstateDetails = ({
               <Box paddingRight="2">
                 <FaBed size="20" />
               </Box>
-              Bedrooms: {bedrooms}
+              {t('bedrooms')}: {bedrooms}
             </Box>
             <Box display="flex" justifyContent="center" paddingRight="3">
               <Box paddingRight="2" paddingLeft="1">
                 <FaBath size="18" />
               </Box>
-              Bathrooms: {bathrooms}
-            </Box>
-            <Box display="flex" justifyContent="center" paddingRight="3">
-              <Box paddingRight="2" paddingLeft="1">
-                <FaUsers size="18" />
-              </Box>
-              Beds: {beds}
+              {t('bathrooms')}: {bathrooms}
             </Box>
             <Box display="flex" justifyContent="center" paddingRight="3">
               <Box paddingRight="2" paddingLeft="1">
                 <BsDoorClosed size="18" />
               </Box>
-              Rooms: {rooms}
+              {t('rooms')}: {rooms}
             </Box>
             {/* SECOND ROW OF ICON PROPS */}
             <Box display="flex" justifyContent="center" paddingRight="3">
               <Box paddingRight="2">
                 <FaUmbrellaBeach size="18" />
               </Box>
-              Beach: {sea_dist} m
+              {t('beach')}: {sea_dist} m
             </Box>
             <Box display="flex" justifyContent="center" paddingRight="3">
               <Box paddingRight="2">
                 <FaBorderAll size="18" />
               </Box>
-              Area: {area} sq.m
+              {t('area')}: {area} sq.m
             </Box>
           </SimpleGrid>
           <Text p="5" fontSize="lg" fontWeight="bold">
             {" "}
-            Description
+            {t('description')}
           </Text>
           <Box
             paddingTop="10px"
@@ -172,7 +166,7 @@ const EstateDetails = ({
           </Box>
           <Text p="5" fontSize="lg" fontWeight="bold">
             {" "}
-            Services
+            {t('services')}
           </Text>
           <SimpleGrid
             paddingTop="10px"
@@ -206,7 +200,7 @@ const EstateDetails = ({
 export async function getServerSideProps({ params: { id }, locale }) {
   const data = await fetchApi(`${baseUrl}/estates/${id}`);
 
-  const translations = await serverSideTranslations(locale, ['estateServices']);
+  const translations = await serverSideTranslations(locale, ['estatePage']);
 
   return {
     props: {
