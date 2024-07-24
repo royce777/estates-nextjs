@@ -6,6 +6,8 @@ import {
 import { useState } from "react";
 import { FaMapMarkerAlt, FaEnvelope, FaPhone } from "react-icons/fa";
 import { postApiContact, baseUrl } from "../utils/fetchApi";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 
 export default function Contact() {
@@ -17,6 +19,7 @@ export default function Contact() {
   const [errors, setErrors] = useState({});
 
   const toast = useToast();
+  const { t } = useTranslation('contacts');
 
   const validate = () => {
     const errors = {};
@@ -116,7 +119,7 @@ export default function Contact() {
       <Center>
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing="20px" maxWidth="1000px">
           <Box padding={{ base: "10px" }}>
-            <Text fontSize="xl" fontWeight="semibold">Contact Details</Text>
+            <Text fontSize="xl" fontWeight="semibold">{t('contactDetails')}</Text>
             <VStack marginTop="30px" align="baselin" spacing="30px">
               <HStack spacing="15px">
                 <Icon as={FaMapMarkerAlt} boxSize="8" />
@@ -133,30 +136,30 @@ export default function Contact() {
             </VStack>
           </Box>
           <Box padding={{ base: "10px" }}>
-            <Text fontSize="xl" fontWeight="semibold">Request info</Text>
+            <Text fontSize="xl" fontWeight="semibold">{t('requestInfo')}</Text>
             <form onSubmit={handleContact}>
               <FormControl width={{ base: "350px", sm: "400px" }} padding={{ base: "10px" }}>
-                <FormLabel htmlFor="name">Name</FormLabel>
+                <FormLabel htmlFor="name">{t('name')}</FormLabel>
                 <Input value={name} isInvalid={errors.name} name="name" onChange={handleNameChange} />
                 {errors.name && <Text color="red.500">{errors.name}</Text>}
               </FormControl>
               <FormControl padding={{ base: "10px" }}>
-                <FormLabel htmlFor="phone">Phone</FormLabel>
+                <FormLabel htmlFor="phone">{t('phone')}</FormLabel>
                 <Input value={phone} isInvalid={errors.phone} name="phone" onChange={handlePhoneChange} />
                 {errors.phone && <Text color="red.500">{errors.phone}</Text>}
               </FormControl>
               <FormControl padding={{ base: "10px" }}>
-                <FormLabel htmlFor="email">Email</FormLabel>
+                <FormLabel htmlFor="email">{t('email')}</FormLabel>
                 <Input value={email} isInvalid={errors.email} name="email" onChange={handleEmailChange} />
                 {errors.email && <Text color="red.500">{errors.email}</Text>}
               </FormControl>
               <FormControl padding={{ base: "10px" }}>
-                <FormLabel htmlFor="message">Message</FormLabel>
+                <FormLabel htmlFor="message">{t('message')}</FormLabel>
                 <Textarea value={message} isInvalid={errors.message} name="message" onChange={handleMessageChange} />
                 {errors.message && <Text color="red.500">{errors.message}</Text>}
               </FormControl>
               <Center>
-                <Button width={{ base: "100%" }} type="submit">Send</Button>
+                <Button width={{ base: "100%" }} type="submit">{t('send')}</Button>
               </Center>
             </form>
           </Box>
@@ -165,3 +168,9 @@ export default function Contact() {
     </Box>
   );
 }
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...await serverSideTranslations(locale, ['contacts']),
+  },
+});
