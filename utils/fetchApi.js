@@ -1,12 +1,9 @@
 import axios from "axios";
 const https = require('https');
 
-export const baseUrl = "https://localhost:5000";
+export const baseUrl = "http://164.92.140.154/api";
 
 
-const httpsAgent = new https.Agent({
-  rejectUnauthorized: false
-})
 
 export const fetchApi = async (url, token) => {
   try {
@@ -16,7 +13,7 @@ export const fetchApi = async (url, token) => {
         Cookie: `access_token_cookie=${token}`
       }
     }
-    const { data } = await axios.get(url, { withCredentials: true, httpsAgent, headers });
+    const { data } = await axios.get(url, { withCredentials: true, headers });
     return data;
   }
   catch (err) {
@@ -27,13 +24,13 @@ export const fetchApi = async (url, token) => {
 };
 
 export const postApi = async (url, estate_data) => {
-  const response = await axios.post(url, estate_data, { withCredentials: true, httpsAgent });
+  const response = await axios.post(url, estate_data, { withCredentials: true });
   return response;
 };
 
 export const postApiContact = async (url, formData) => {
   try {
-    const response = await axios.post(url, formData, { httpsAgent });
+    const response = await axios.post(url, formData);
     return response;
   }
   catch (error) {
