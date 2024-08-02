@@ -21,7 +21,7 @@ const Footer = () => {
           <Link href="#">
             Terms of Service
           </Link>
-          <Link href="#">Privacy Policy</Link>
+          <Link href="/privacy-policy">Privacy Policy</Link>
           <Link href="/login">Login</Link>
         </Flex>
       </Flex>
