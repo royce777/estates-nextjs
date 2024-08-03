@@ -42,7 +42,7 @@ export default function Login() {
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="password">Password</FormLabel>
-              <Input name="password" onChange={(e) => setPassword(e.target.value)} />
+              <Input name="password" type="password" onChange={(e) => setPassword(e.target.value)} />
             </FormControl>
             <Button type="submit">Login</Button>
           </form>
