@@ -1,7 +1,7 @@
 import axios from "axios";
 const https = require('https');
 
-export const baseUrl = "https://harmony-home.it/api";
+export const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
 

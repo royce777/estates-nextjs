@@ -13,7 +13,8 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://harmony-home.it/api/login', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const response = await axios.post(apiUrl + '/login', {
         username,
         password,
       },
