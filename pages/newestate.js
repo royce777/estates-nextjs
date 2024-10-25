@@ -1,4 +1,4 @@
-import { Text, Center, Button, useRadio } from "@chakra-ui/react";
+import { Text, Center, Button, useToast, useRadio } from "@chakra-ui/react";
 import CheckBoxForm from "../components/NewEstateForm/CheckBoxForm";
 import DescriptionsForm from "../components/NewEstateForm/DescriptionsForm";
 import MainPropsForm from "../components/NewEstateForm/MainProps";
@@ -10,6 +10,8 @@ import { baseUrl, postApi } from "../utils/fetchApi";
 
 // TODO : Validate forms !!!
 export default function Newestate() {
+  
+  const toast = useToast();
 
   // logic to handle main properties of an estate
   const [mainProps, setMainProps] = useState({
@@ -31,6 +33,70 @@ export default function Newestate() {
     m_rate: -1,
     category: "apartment",
   });
+
+  const resetForm = () => {
+    setMainProps({
+      name: "",
+      ref_id: "",
+      location: "Forte dei Marmi",
+      area: -1,
+      rooms: -1,
+      bedrooms: -1,
+      bathrooms: -1,
+      garden_area: -1,
+      beds: -1,
+      energy_class: "A4",
+      sea_dist: -1,
+      listing_type: "rent",
+      build_year: -1,
+      floors: -1,
+      price: -1,
+      m_rate: -1,
+      category: "apartment",
+    });
+
+    setDescription({
+      en: {
+        lang: "en",
+        desc: "",
+      },
+      ru: {
+        lang: "ru",
+        desc: "",
+      },
+      it: {
+        lang: "it",
+        desc: "",
+      }
+    });
+
+    setExtraFeatures({
+      pool: false,
+      ac: false,
+      park: false,
+      alarm: false,
+      auto_gate: false,
+      tv: false,
+      internet: false,
+      fireplace: false,
+      bbq: false,
+      gym: false,
+      pan_view: false,
+      sauna: false,
+      garage: false,
+      spa: false,
+      jacuzzi: false,
+      taverna: false,
+      video_surv: false,
+      domotics: false,
+      terrace: false,
+      balcony: false,
+      veranda: false,
+    });
+
+    setSelectedFiles([]);
+    setSelectedImages([]);
+  }
 
   const handleMainPropsChange = _.debounce(
     (e) => setMainProps({ ...mainProps, [e.target.name]: e.target.value }),
@@ -102,7 +168,6 @@ export default function Newestate() {
   });
 
   //  to handle images
-  const [urls, setUrls] = useState([]);
   const [progress, setProgress] = useState(0);
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -118,10 +183,11 @@ export default function Newestate() {
     setSelectedFiles((prevFiles) => prevFiles.concat(selectedFilesArray));
   };
 
-  const handleUpload = () => {
+  const handleUpload = async (ref_id) => {
     const promises = [];
+    const urls = [];
     selectedFiles.map((image) => {
-      const uploadTask = storage.ref(`images/${image.name}`).put(image);
+      const uploadTask = storage.ref(`images/${ref_id}/${image.name}`).put(image);
       const promise = new Promise((resolve, reject) => {
         uploadTask.on(
           "state_changed",
@@ -137,16 +203,15 @@ export default function Newestate() {
           },
           async () => {
             await storage
-              .ref("images")
+              .ref(`images/${ref_id}`)
               .child(image.name)
               .getDownloadURL()
               .then((url) => {
-                setUrls(prevUrls => {
-                  return [...prevUrls, url];
-                });
+                urls.push(url);
                 resolve();
               })
               .catch((error) => {
+                console.log("Get url error: ", error);
                 reject(error);
               });
           }
@@ -155,27 +220,61 @@ export default function Newestate() {
       promises.push(promise);
     });
 
-    return promises;
+    await Promise.all(promises);
+
+    return urls;
   };
 
   const submitForm = async () => {
-    // convert descriptions object into array
-    const des = description;
-    const descriptions = [];
-    descriptions.push(des.en, des.ru, des.it);
+    try{
+      // convert descriptions object into array
+      const des = description;
+      const descriptions = [];
+      descriptions.push(des.en, des.ru, des.it);
 
-    // upload images to firebase
-    const promises = handleUpload();
-    // convert image urls array to necessary format for submission
-    await Promise.all(promises);
-    const images = [];
-    urls.map((url) => {
-      images.push({ url: url });
-    });
-    mainProps.description = descriptions;
-    mainProps.features = extraFeatures;
-    mainProps.images = images;
-    const response = postApi(`${baseUrl}/estates/0`, mainProps);
+      // upload images to firebase
+      const urls = await handleUpload(mainProps.ref_id);
+      const images = [];
+      urls.map((url) => {
+        images.push({ url: url });
+      });
+      mainProps.description = descriptions;
+      mainProps.features = extraFeatures;
+      mainProps.images = images;
+      const response = await postApi(`${baseUrl}/estates/0`, mainProps);
+      if (response.status === 201){
+        window.location.href = `estate/${response.data.id}`;
+        toast({
+          title: 'Success',
+          description: "Success!",
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+      else{
+        console.error("request failed :", response);
+        toast({
+          title: 'Error',
+          description: "Error!",
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+
+      }
+    }
+    catch(error){
+      console.error(error);
+      toast({
+        title: 'Error',
+        description: "Error!",
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+
+    }
   };
 
   return (

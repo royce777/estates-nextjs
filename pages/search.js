@@ -95,7 +95,7 @@ export async function getServerSideProps(context) {
   const maxPrice = context.query.maxPrice || "";
 
   const data = await fetchApi(
-    `${baseUrl}/search?listing_type=${listingType}&location=${location}&bedrooms=${bedrooms}&bathrooms=${bathrooms}&beds=${beds}&sea_dist=${seaDist}&area=${area}&category=${category}&minPrice=${minPrice}&maxPrice=${maxPrice}`,
+    `${baseUrl}/search`,
     context.req.cookies.access_token_cookie
   );
 
