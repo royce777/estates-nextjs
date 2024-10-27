@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Container, HStack, SimpleGrid, Text, Center } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalCloseButton, Box, Button, Container, HStack, SimpleGrid, Text, Center, IconButton } from "@chakra-ui/react";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -15,6 +15,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { baseUrl, fetchApi, deleteEstate } from "../../utils/fetchApi";
 import { BsDoorClosed, BsCheck2Circle } from "react-icons/bs";
+import { FaExpand } from 'react-icons/fa';
 import {
   FaBath,
   FaBed,
@@ -76,6 +77,21 @@ const EstateDetails = ({
   const toast = useToast();
 
   const { isAdmin } = useUser();
+
+
+  {/*FULL SCREEN MODAL*/}
+  const [isFullScreenOpen, setIsFullScreenOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const openFullscreen = (index) => {
+    setCurrentIndex(index);
+    setIsFullScreenOpen(true);
+  };
+
+  const closeFullscreen = () => {
+    setIsFullScreenOpen(false);
+  };
+
 
   const handleDelete = async () => {
     onClose();
@@ -182,16 +198,59 @@ const EstateDetails = ({
           {images.length > 0 && (
             <Carousel infiniteLoop autoPlay swipeable={true} showThumbs={true}>
               {images.map((img, index) => (
-                <Container key={index} maxWidth="1000px" maxHeight="600px">
+                <Container key={index} maxWidth="1000px" maxHeight="600px" display='flex' justifyContent='center' alignItems='center'>
                   {/* <Image src={img.url} height="600px" width="1180px" fit="none" /> */}
                   <img
                     src={img.url}
                   // style={{ maxHeight: "100%", maxWidth: "100%" }}
                   />
+                  <IconButton
+                    icon={<FaExpand />}
+                    position="absolute"
+                    top="30px"
+                    left="30px"
+                    onClick={() => openFullscreen(index)}
+                    aria-label="View fullscreen"
+                    colorScheme="gray"
+                    variant="solid"
+                  />
                 </Container>
               ))}
             </Carousel>
           )}
+          {/* Fullscreen Modal */}
+          <Modal isOpen={isFullScreenOpen} onClose={closeFullscreen} size="full">
+            <ModalOverlay />
+            <ModalContent bg="black">
+              <ModalCloseButton 
+                color="white" 
+                top="20px" 
+                right="20px" 
+                zIndex="10"             // Ensures button is above the carousel arrows
+                size="lg"
+              />
+              <Carousel
+                selectedItem={currentIndex} // Start at the current index
+                infiniteLoop
+                showThumbs={false}
+                swipeable
+              >
+                {images.map((img, index) => (
+                  <Box key={index} display="flex" justifyContent="center" alignItems="center" height="100vh">
+                    <img
+                      src={img.url}
+                      alt={`Fullscreen image ${index + 1}`}
+                      style={{
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </Box>
+                ))}
+              </Carousel>
+            </ModalContent>
+          </Modal>
 
           <Text p="5" fontSize="lg" fontWeight="bold">
             {" "}
@@ -254,15 +313,10 @@ const EstateDetails = ({
             textAlign="center"
           >
             {description.map((desc, index) => {
-              if (desc.lang === "en")
+              if (desc.lang === locale)
                 return (
                   <Text p="3" key={index}>
-                    Irure excepteur veniam labore dolore quis exercitation dolor
-                    dolor. Lorem do voluptate ad tempor ex exercitation eu qui
-                    duis id. Eiusmod incididunt sunt nostrud deserunt nisi
-                    exercitation. Cillum aliquip esse quis irure. Duis id magna ea
-                    ut quis eiusmod eiusmod ea labore minim. Ipsum eiusmod est id
-                    labore in exercitation.
+                    {desc.desc}
                   </Text>
                 );
             })}

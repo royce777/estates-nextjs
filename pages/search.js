@@ -14,8 +14,6 @@ const Search = ({ authorized, properties }) => {
   const [searchFilters, setSearchFilters] = useState(false);
   const router = useRouter();
   const { isAdmin, setIsAdmin } = useUser();
-  console.log(properties);
-  console.log("Authorized: ", authorized);
   useEffect(() => {
     if (!authorized) {
       setIsAdmin(false);

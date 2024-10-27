@@ -8,7 +8,6 @@ import Link from "next/link";
 export default function EstateCard({ property }) {
 
   useEffect(() => {
-    console.log(property);
   }, []);
 
   const imageUrl = property.images[0].url;
@@ -32,8 +31,18 @@ export default function EstateCard({ property }) {
   return (
     <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
       {/* <Image src={property.imageUrl} alt={property.imageAlt} layout='fill' /> */}
+      <Box width='400px' height='300px' position='relative'>
+        <Image
+          loader={() => imageUrl}
+          src={imageUrl}
+          alt='alt'
+          layout='fill'            // Make the image fill the container
+          objectFit='cover'        // Ensure the image covers the entire box
+          sizes="400px"
+          style={{ borderRadius: 'inherit' }}  // Match the border radius
+        />
+      </Box>
 
-      <Image loader={() => imageUrl} src={imageUrl} alt='alt' width={400} height={300} />
 
       <Box p='3'>
 
