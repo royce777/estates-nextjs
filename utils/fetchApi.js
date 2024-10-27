@@ -28,6 +28,11 @@ export const postApi = async (url, estate_data) => {
   return response;
 };
 
+export const deleteEstate = async (url, estate_id) => {
+  const response = await axios.delete(url, {withCredentials: true});
+  return response;
+}
+
 export const postApiContact = async (url, formData) => {
   try {
     const response = await axios.post(url, formData);

@@ -1,7 +1,19 @@
-import { Box, Container, HStack, SimpleGrid, Text, Center } from "@chakra-ui/react";
+import React from "react";
+import { Box, Button, Container, HStack, SimpleGrid, Text, Center } from "@chakra-ui/react";
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  useDisclosure,
+  useToast
+} from '@chakra-ui/react'
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { baseUrl, fetchApi } from "../../utils/fetchApi";
+import { baseUrl, fetchApi, deleteEstate } from "../../utils/fetchApi";
 import { BsDoorClosed, BsCheck2Circle } from "react-icons/bs";
 import {
   FaBath,
@@ -10,13 +22,17 @@ import {
   FaPeriscope,
   FaUmbrellaBeach,
   FaUsers,
+  FaTrash
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import { useUser } from '../../context/UserContext.js';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const EstateDetails = ({
   estateDetails: {
+    id,
     name,
     ref_id,
     area,
@@ -45,6 +61,8 @@ const EstateDetails = ({
     setFeatureNames(featNames);
   }, []);
 
+  const { locale } = useRouter();
+
   const { t } = useTranslation('estatePage');
 
   const [featureNames, setFeatureNames] = useState([]);
@@ -52,6 +70,42 @@ const EstateDetails = ({
   const getFeatureNames = (features) => {
     return Object.keys(features).filter(key => features[key] === true);
   };
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef()
+  const toast = useToast();
+
+  const { isAdmin } = useUser();
+
+  const handleDelete = async () => {
+    onClose();
+    console.log(baseUrl + `/estates/${id}`);
+    const response = await deleteEstate(baseUrl + `/estates/${id}`);
+    if(response.status === 200){
+      toast({
+        title: 'Success',
+        description: "Estate deleted! You will be redirected to the homepage !",
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+      setTimeout(() => {
+        window.location.href = `/`;
+      }, 2000);
+    }
+    else {
+      console.error("request failed :", response);
+      toast({
+        title: 'Error',
+        description: "Error!",
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
+  };
+
   return (
     <>
       <Center>
@@ -62,6 +116,54 @@ const EstateDetails = ({
           paddingBottom={{ base: "30px" }}
           maxWidth={{ base: "1000px" }}
         >
+          <HStack justify="space-between" align="center">
+            <Text fontSize="3xl" p="3">
+              {name}
+            </Text>
+            <HStack spacing="3">
+              <Text fontSize="2xl" p="3">
+                {ref_id}
+              </Text>
+              {isAdmin && (
+                <>
+                  <Button 
+                    colorScheme="red" 
+                    variant="ghost" 
+                    onClick={onOpen}
+                  >
+                    <FaTrash size="18"/>
+                  </Button>
+                  <AlertDialog
+                    isOpen={isOpen}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                  >
+                    <AlertDialogOverlay>
+                      <AlertDialogContent>
+                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                          Warning 
+                        </AlertDialogHeader>
+
+                        <AlertDialogBody>
+                          Are you sure? You can't undo this action afterwards.
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                          <Button ref={cancelRef} onClick={onClose}>
+                            Cancel
+                          </Button>
+                          <Button colorScheme='red' onClick={handleDelete} ml={3}>
+                            Delete
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialogOverlay>
+                  </AlertDialog>
+                </>
+              )}
+            </HStack>
+          </HStack>
+          {/*
           <HStack justify="space-between">
             <Text fontSize="3xl" p="3">
               {name}
@@ -70,6 +172,7 @@ const EstateDetails = ({
               {ref_id}
             </Text>
           </HStack>
+          */}
           <Box display="flex" p="3">
             <Box paddingRight="2" paddingLeft="1">
               <FaPeriscope size="18" />
