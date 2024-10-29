@@ -126,18 +126,24 @@ const EstateDetails = ({
     <>
       <Center>
         <Box
-          paddingLeft={{ base: "30px" }}
-          paddingRight={{ base: "30px" }}
+          paddingLeft={{ base: "5px" }}
+          paddingRight={{ base: "5px" }}
           paddingTop="70px"
           paddingBottom={{ base: "30px" }}
-          maxWidth={{ base: "1000px" }}
+          maxWidth={{ base:"100%", sm:'480px', md:'600px', lg:'1000px'}}
         >
           <HStack justify="space-between" align="center">
-            <Text fontSize="3xl" p="3">
+            <Text 
+              fontSize={{base:"xl", md:"2xl", lg:"3xl"}} 
+              p="3"
+            >
               {name}
             </Text>
             <HStack spacing="3">
-              <Text fontSize="2xl" p="3">
+              <Text 
+                fontSize={{base:"lg", md:"xl", lg:"2xl"}} 
+                p="3"
+              >
                 {ref_id}
               </Text>
               {isAdmin && (
@@ -198,7 +204,14 @@ const EstateDetails = ({
           {images.length > 0 && (
             <Carousel infiniteLoop autoPlay swipeable={true} showThumbs={true}>
               {images.map((img, index) => (
-                <Container key={index} maxWidth="1000px" maxHeight="600px" display='flex' justifyContent='center' alignItems='center'>
+                <Container 
+                  key={index} 
+                  display='flex'
+                  maxWidth={{ base:"100%", sm:'480px', md:'600px', lg:'1000px'}}
+                  maxHeight={{ base:"300px", sm:"400px", md:"500px", lg:"600px"}}
+                  justifyContent='center' 
+                  alignItems='center'
+                >
                   {/* <Image src={img.url} height="600px" width="1180px" fit="none" /> */}
                   <img
                     src={img.url}
@@ -207,7 +220,7 @@ const EstateDetails = ({
                   <IconButton
                     icon={<FaExpand />}
                     position="absolute"
-                    top="30px"
+                    top="20px"
                     left="30px"
                     onClick={() => openFullscreen(index)}
                     aria-label="View fullscreen"
