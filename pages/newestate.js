@@ -108,6 +108,10 @@ export default function Newestate() {
       lang: "en",
       desc: "",
     },
+    uk: {
+      lang: "uk",
+      desc: "",
+    },
     ru: {
       lang: "ru",
       desc: "",
@@ -123,6 +127,11 @@ export default function Newestate() {
       setDescription({
         ...description,
         en: { lang: "en", desc: e.target.value },
+      });
+    } else if (e.target.name === "descr-uk") {
+      setDescription({
+        ...description,
+        uk: { lang: "uk", desc: e.target.value },
       });
     } else if (e.target.name === "descr-it") {
       setDescription({
@@ -230,7 +239,7 @@ export default function Newestate() {
       // convert descriptions object into array
       const des = description;
       const descriptions = [];
-      descriptions.push(des.en, des.ru, des.it);
+      descriptions.push(des.en, des.ru, des.it, des.uk);
 
       // upload images to firebase
       const urls = await handleUpload(mainProps.ref_id);

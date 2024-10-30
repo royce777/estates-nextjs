@@ -15,6 +15,7 @@ import { useRouter } from 'next/router'
 import en from './translation/en'
 import it from './translation/it'
 import ru from './translation/ru'
+import uk from './translation/uk'
 import MySelect from '../MySelect/MySelect'
 import { useState, useRef } from "react";
 import { useUser } from '../../context/UserContext';
@@ -59,12 +60,17 @@ const locales = [
   {
     label: '🇷🇺 RUS',
     value: 'ru'
+  },
+  {
+    label: '🇺🇦 UKR',
+    value: 'uk'
   }
 ]
 
 const selectLocale = (locale) => {
   if (locale === 'it') return it;
   if (locale === 'ru') return ru;
+  if (locale === 'uk') return uk;
   else return en;
 }
 

@@ -12,7 +12,6 @@ export default function DescriptionsForm({handleDescriptionsChange}){
   
     return(
       <SimpleGrid
-        minChildWidth="200px"
         spacing={10}
         paddingRight={{
           base: "40px",
@@ -28,6 +27,7 @@ export default function DescriptionsForm({handleDescriptionsChange}){
           lg: "200px",
           xl: "300px",
         }}
+        columns={{sm: 1, md: 1, lg: 2}}
       >
         <Box>
           <FormControl>
@@ -58,6 +58,17 @@ export default function DescriptionsForm({handleDescriptionsChange}){
               height="200px"
               placeholder="Insert description in Italian."
               name="descr-it"
+              onBlur={handleDescriptionsChange}
+            ></Textarea>
+          </FormControl>
+        </Box>
+        <Box>
+          <FormControl>
+            <FormLabel htmlFor="descr-uk">Description-UKR</FormLabel>
+            <Textarea
+              height="200px"
+              placeholder="Insert description in Ukrainian."
+              name="descr-uk"
               onBlur={handleDescriptionsChange}
             ></Textarea>
           </FormControl>
