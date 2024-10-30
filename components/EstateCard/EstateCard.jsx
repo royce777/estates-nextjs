@@ -29,22 +29,25 @@ export default function EstateCard({ property }) {
   } */
 
   return (
-    <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
+    <Box maxWidth={{base:"100%", sm:"400px"}} borderWidth='1px' borderRadius='lg' overflow='hidden'>
       {/* <Image src={property.imageUrl} alt={property.imageAlt} layout='fill' /> */}
-      <Box width='400px' height='300px' position='relative'>
+      <Box maxWidth={{base:"100%", sm:"400px"}} height='300px' position='relative'>
         <Image
           loader={() => imageUrl}
           src={imageUrl}
           alt='alt'
           layout='fill'            // Make the image fill the container
           objectFit='cover'        // Ensure the image covers the entire box
-          sizes="400px"
+          sizes="(max-width: 480px) 300px, 400px"
           style={{ borderRadius: 'inherit' }}  // Match the border radius
         />
       </Box>
 
 
-      <Box p='3'>
+      <Box 
+        maxWidth={{base:"100%", sm:"400px"}}
+        p='3'
+      >
 
         <Link href={`/estate/${property.id}`}>
           <Text fontSize='xl' fontWeight='semibold'>{property.name} </Text>

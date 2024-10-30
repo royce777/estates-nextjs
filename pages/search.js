@@ -45,15 +45,13 @@ const Search = ({ authorized, properties }) => {
       <Flex
         flexWrap="wrap"
         justifyContent="center"
-        paddingRight="50"
-        paddingLeft="50"
       >
         {properties.map((property, index) => (
           <Flex
             key={index}
             justifyContent="center"
-            paddingRight="10"
-            paddingLeft="10"
+            paddingRight="5"
+            paddingLeft="5"
             paddingBottom="8"
           >
             <EstateCard property={property} />
