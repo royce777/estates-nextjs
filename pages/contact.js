@@ -127,7 +127,7 @@ export default function Contact() {
               </HStack>
               <HStack spacing="15px">
                 <Icon as={FaEnvelope} boxSize="8" />
-                <Text>stasulalesa@gmail.com</Text>
+                <Text>info@harmony-home.it</Text>
               </HStack>
               <HStack spacing="15px">
                 <Icon as={FaPhone} boxSize="8" />

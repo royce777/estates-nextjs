@@ -72,7 +72,7 @@ const PrivacyPolicy = () => {
         <Heading as="h2" size="md" mb={2}>
           {t("contactUs")}
         </Heading>
-        <Text mb={4}>{t("contactUsText")} stasulalesa@gmail.com</Text>
+        <Text mb={4}>{t("contactUsText")} info@harmony-home.it</Text>
 
         <Text mb={4}>{t("consent")}</Text>
       </Box>

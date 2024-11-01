@@ -2,8 +2,10 @@ import { Image, Box, Center, Button, Flex, Text } from "@chakra-ui/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import MySliderData from "./MySliderData";
+import { useRouter } from 'next/router';
 
 const MySlider = ({t}) => {
+  const router = useRouter();
   return (
       // TODO: Correct image centering
       <Flex justifyContent='center' alignItems='center'>
@@ -21,15 +23,15 @@ const MySlider = ({t}) => {
             </Text>
             </Center>
             <Center> 
-                <Button height='80px' margin='3px' colorScheme='blackAlpha' bgColor='black'>
+                <Button height='80px' margin='3px' colorScheme='blackAlpha' bgColor='black' onClick={() => router.push('/search')}>
                    {t('home:buy_btn')} 
                 </Button>
-                <Button height='80px' margin='3px' colorScheme='blackAlpha' bgColor='black'>
+                <Button height='80px' margin='3px' colorScheme='blackAlpha' bgColor='black' onClick={() => router.push('/search')}>
                    {t('home:rent_btn')} 
                 </Button>
             </Center>
             <Center>
-                <Button height='80px' margin='3px' colorScheme='blackAlpha' bgColor='black'>
+                <Button height='80px' margin='3px' colorScheme='blackAlpha' bgColor='black' onClick={() => router.push('/contact')}>
                    {t('home:sell_btn')} 
                 </Button>
             </Center>
