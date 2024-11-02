@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Flex, Select, Box, Text, Input, Spinner, Icon, Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { MdCancel } from 'react-icons/md';
@@ -9,16 +9,58 @@ import { baseUrl, fetchApi } from '../utils/fetchApi';
 import noresult from '../public/images/noresult.svg';
 
 export default function SearchFilters() {
-  const [filters] = useState(filterData);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [locationData, setLocationData] = useState();
-  const [showLocations, setShowLocations] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const paramsDef = {
+    listing_type: "",
+    location: "",
+    bedrooms: "",
+    bathrooms: "",
+    beds: "",
+    sea_dist: "",
+    area: "",
+    sort: "",
+    category: "",
+    minPrice: "",
+    maxPrice: ""
+  };
+  const [params, setParams] = useState(paramsDef);
   const router = useRouter();
+
+  const hasMounted = useRef(false);  // Track if the component has mounted
+
+  // Sync params with URL query only on initial render
+  useEffect(() => {
+    if (!hasMounted.current) {
+      hasMounted.current = true;  // Set to true after the first render
+      const { query } = router;
+
+      // Create a new params object from the query parameters
+      const newParams = { ...paramsDef };
+
+      Object.keys(newParams).forEach((key) => {
+        if (query[key]) {
+          newParams[key] = query[key];
+        }
+      });
+
+      setParams(newParams);  // Set the state based on URL parameters
+    }
+  }, [router.query]);  // This will run only once due to the hasMounted check
+
+  // Update params state on select change
+  const handleSelectChange = (name, value) => {
+    setParams(prevParams => ({
+      ...prevParams,
+      [name]: value
+    }));
+  };
+
+  const resetParams = () => {
+    setParams(paramsDef);
+  }
 
   const searchProperties = (filterValues) => {
     const path = router.pathname;
-    const { query } = router;
+    const query = {};
 
     const values = getFilterValues(filterValues)
 
@@ -31,24 +73,17 @@ export default function SearchFilters() {
     router.push({ pathname: path, query: query });
   };
 
-  useEffect(() => {
-    if (searchTerm !== '') {
-      const fetchData = async () => {
-        setLoading(true);
-        const data = await fetchApi(`${baseUrl}/auto-complete?query=${searchTerm}`);
-        setLoading(false);
-        setLocationData(data?.hits);
-      };
-
-      fetchData();
-    }
-  }, [searchTerm]);
 
   return (
     <Flex bg='gray.100' p='4' justifyContent='center' flexWrap='wrap'>
-      {filters?.map((filter) => (
+      {filterData?.map((filter) => (
         <Box key={filter.queryName}>
-          <Select onChange={(e) => searchProperties({ [filter.queryName]: e.target.value })} placeholder={filter.placeholder} w='fit-content' p='2' >
+          <Select 
+            value={params[filter.queryName]}
+            onChange={(e) => handleSelectChange(filter.queryName, e.target.value )} 
+            placeholder={filter.placeholder} 
+            w='fit-content' 
+            p='2' >
             {filter?.items?.map((item) => (
               <option value={item.value} key={item.value}>
                 {item.name}
@@ -57,63 +92,13 @@ export default function SearchFilters() {
           </Select>
         </Box>
       ))}
-      <Flex flexDir='column'>
-        {
-          /*
-          <Button onClick={() => setShowLocations(!showLocations)} border='1px' borderColor='gray.200' marginTop='2' >
-            Search Location
-          </Button>
-          */
-        }
-        { /* showLocations && (
-          <Flex flexDir='column' pos='relative' paddingTop='2'>
-            <Input
-              placeholder='Type Here'
-              value={searchTerm}
-              w='300px'
-              focusBorderColor='gray.300'
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            {searchTerm !== '' && (
-              <Icon
-                as={MdCancel}
-                pos='absolute'
-                cursor='pointer'
-                right='5'
-                top='5'
-                zIndex='100'
-                onClick={() => setSearchTerm('')}
-              />
-            )}
-            {loading && <Spinner margin='auto' marginTop='3' />}
-            {showLocations && (
-              <Box height='300px' overflow='auto'>
-                {locationData?.map((location) => (
-                  <Box
-                    key={location.id}
-                    onClick={() => {
-                      searchProperties({ locationExternalIDs: location.externalID });
-                      setShowLocations(false);
-                      setSearchTerm(location.name);
-                    }}
-                  >
-                    <Text cursor='pointer' bg='gray.200' p='2' borderBottom='1px' borderColor='gray.100' >
-                      {location.name}
-                    </Text>
-                  </Box>
-                ))}
-                {!loading && !locationData?.length && (
-                  <Flex justifyContent='center' alignItems='center' flexDir='column' marginTop='5' marginBottom='5' >
-                    <Image src={noresult} />
-                    <Text fontSize='xl' marginTop='3'>
-                      Waiting to search!
-                    </Text>
-                  </Flex>
-                )}
-              </Box>
-            )}
-          </Flex>
-        ) */}
+      <Flex width="100%" justifyContent="center" mt="4">
+        <Button onClick={() => searchProperties(params)} mr="2" variant="outline">
+          Search
+        </Button>
+        <Button onClick={() => resetParams()} variant="outline">
+          Reset
+        </Button>
       </Flex>
     </Flex>
   );

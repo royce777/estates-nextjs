@@ -10,16 +10,9 @@ import { baseUrl, fetchApi } from "../utils/fetchApi";
 import noresult from "../public/images/noresult.svg";
 import { useUser } from "../context/UserContext";
 
-const Search = ({ authorized, properties }) => {
+const Search = ({ properties }) => {
   const [searchFilters, setSearchFilters] = useState(false);
   const router = useRouter();
-  const { isAdmin, setIsAdmin } = useUser();
-  useEffect(() => {
-    if (!authorized) {
-      setIsAdmin(false);
-      localStorage.setItem('isAdmin', false);
-    }
-  }, [authorized]);
 
   return (
     <Box paddingTop="70px">
@@ -79,33 +72,36 @@ const Search = ({ authorized, properties }) => {
 export default Search;
 
 export async function getServerSideProps(context) {
-  const listingType = context.query.listing_type || "";
-  const location = context.query.location || "Forte dei Marmi";
-  const bedrooms = context.query.bedrooms || "0";
-  const bathrooms = context.query.bathrooms || "0";
-  const beds = context.query.beds || "0";
-  const seaDist = context.query.sea_dist || "100000";
-  const area = context.query.area || "0";
-  const category = context.query.category || "";
-  const minPrice = context.query.minPrice || "";
-  const maxPrice = context.query.maxPrice || "";
+  const params = {
+    listing_type: context.query.listing_type || "",
+    location: context.query.location || "",
+    bedrooms: context.query.bedrooms || "",
+    bathrooms: context.query.bathrooms || "",
+    beds: context.query.beds || "",
+    sea_dist: context.query.sea_dist || "",
+    area: context.query.area || "",
+    category: context.query.category || "",
+    minPrice: context.query.minPrice || "",
+    maxPrice: context.query.maxPrice || ""
+  };
+
+  // Filter out empty parameters and construct the query string
+  const queryString = Object.entries(params)
+    .filter(([key, value]) => value !== "")  // Remove empty values
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    .join("&");
+
+  const searchUrl = queryString !== '' ? `${baseUrl}/search?${queryString}` : `${baseUrl}/search`
 
   const data = await fetchApi(
-    `${baseUrl}/search`,
+    searchUrl,
     context.req.cookies.access_token_cookie
   );
-
-  // TODO: Remove this test code
-  let authorized = true;
-  if (data.status === 401) {
-    authorized = false;
-  }
 
   //console.log("DATA: ");
   //console.log(data);
   return {
     props: {
-      authorized: authorized,
       properties: data.estates || [],
     },
   };
