@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { Flex, Select, Box, Text, Input, Spinner, Icon, Button } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { MdCancel } from 'react-icons/md';
+import { FaDeleteLeft } from "react-icons/fa6";
+import { FaSearch } from "react-icons/fa";
 import Image from 'next/image';
 
 import { filterData, getFilterValues } from '../utils/filterData';
@@ -81,12 +82,12 @@ export default function SearchFilters() {
           <Select 
             value={params[filter.queryName]}
             onChange={(e) => handleSelectChange(filter.queryName, e.target.value )} 
-            placeholder={filter.placeholder} 
+            placeholder={filter.placeholder[router.locale]} 
             w='fit-content' 
             p='2' >
             {filter?.items?.map((item) => (
               <option value={item.value} key={item.value}>
-                {item.name}
+                {item.name[router.locale]}
               </option>
             ))}
           </Select>
@@ -94,10 +95,10 @@ export default function SearchFilters() {
       ))}
       <Flex width="100%" justifyContent="center" mt="4">
         <Button onClick={() => searchProperties(params)} mr="2" variant="outline">
-          Search
+          <FaSearch/>
         </Button>
         <Button onClick={() => resetParams()} variant="outline">
-          Reset
+          <FaDeleteLeft/>
         </Button>
       </Flex>
     </Flex>
