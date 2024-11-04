@@ -3,16 +3,19 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { Flex, Box, Text, Icon } from "@chakra-ui/react";
 import { MdCompress } from "react-icons/md";
-
 import EstateCard from "../components/EstateCard/EstateCard";
 import SearchFilters from "../components/SearchFilters";
 import { baseUrl, fetchApi } from "../utils/fetchApi";
 import noresult from "../public/images/noresult.svg";
 import { useUser } from "../context/UserContext";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Search = ({ properties }) => {
   const [searchFilters, setSearchFilters] = useState(false);
   const router = useRouter();
+  const { t } = useTranslation('search');
+
 
   return (
     <Box paddingTop="70px">
@@ -23,18 +26,22 @@ const Search = ({ properties }) => {
         borderBottom="1px"
         borderColor="gray.200"
         p="2"
-        fontWeight="black"
+        fontWeight="bold"
         fontSize="lg"
         justifyContent="center"
         alignItems="center"
       >
-        <Text>Search Property By Filters</Text>
+        <Text>{t('search_filters')}</Text>
         <Icon paddingLeft="2" w="7" as={MdCompress} />
       </Flex>
       {searchFilters && <SearchFilters />}
-      <Text fontSize="2xl" p="4" fontWeight="bold">
-        Properties {router.query.purpose}
-      </Text>
+      <Flex
+        justifyContent="center"
+        alignItems="center">
+        <Text fontSize="2xl" p="4" fontWeight="bold">
+          {t('properties')}
+        </Text>
+      </Flex>
       <Flex
         flexWrap="wrap"
         justifyContent="center"
@@ -98,11 +105,14 @@ export async function getServerSideProps(context) {
     context.req.cookies.access_token_cookie
   );
 
+  const translations = await serverSideTranslations(context.locale, ['search']);
+
   //console.log("DATA: ");
   //console.log(data);
   return {
     props: {
       properties: data.estates || [],
+      ...translations
     },
   };
 }
