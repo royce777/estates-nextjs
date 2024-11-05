@@ -1,4 +1,5 @@
-import { Box, Flex, Link, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
@@ -18,7 +19,7 @@ const Footer = () => {
           © {new Date().getFullYear()} All rights reserved
         </Text>
         <Flex mt={{ base: 4, md: 0 }} direction="column" align={{ base: 'center', md: 'start' }}>
-          <Link href="#">
+          <Link href="/terms-of-service">
             Terms of Service
           </Link>
           <Link href="/privacy-policy">Privacy Policy</Link>

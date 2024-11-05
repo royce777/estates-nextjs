@@ -1,0 +1,39 @@
+{
+  "title": "Terms of Service",
+  "acceptance": {
+    "title": "Acceptance of Terms",
+    "content": "By accessing and using this website, you agree to comply with these Terms of Service. If you do not agree, please refrain from using the website."
+  },
+  "servicesProvided": {
+    "title": "Services Provided",
+    "content": "This website offers information, listings, and resources related to real estate. All information is for informational purposes only and does not constitute professional advice."
+  },
+  "userResponsibilities": {
+    "title": "User Responsibilities",
+    "content": "You agree to use this website only for lawful purposes. You are responsible for ensuring the accuracy of any information you submit, and you agree not to misuse any information from the website."
+  },
+  "intellectualProperty": {
+    "title": "Intellectual Property",
+    "content": "All content on this website, including text, images, and logos, is the property of HarmonyHome or its licensors. You may not use any content without permission."
+  },
+  "limitationsOfLiability": {
+    "title": "Limitations of Liability",
+    "content": "HarmonyHome is not liable for any direct or indirect damages arising from your use of the website. The information on the site may not always be accurate, complete, or current."
+  },
+  "links": {
+    "title": "Links to Other Websites",
+    "content": "This website may contain links to third-party sites. HarmonyHome is not responsible for the content or practices of these external sites."
+  },
+  "changes": {
+    "title": "Changes to Terms",
+    "content": "We reserve the right to update these Terms of Service at any time. Your continued use of the site constitutes acceptance of any changes."
+  },
+  "governingLaw": {
+    "title": "Governing Law",
+    "content": "These Terms of Service are governed by the laws of Italy."
+  },
+  "contactUs": {
+    "title": "Contact Us",
+    "content": "For any questions regarding these Terms of Service, please contact us at: info@harmony-home.it ."
+  }
+}

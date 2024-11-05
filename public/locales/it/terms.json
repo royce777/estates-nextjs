@@ -1,0 +1,39 @@
+{
+  "title": "Termini di Servizio",
+  "acceptance": {
+    "title": "Accettazione dei Termini",
+    "content": "Accedendo e utilizzando questo sito web, accetti di rispettare questi Termini di Servizio. Se non sei d'accordo, ti preghiamo di non utilizzare il sito."
+  },
+  "servicesProvided": {
+    "title": "Servizi Forniti",
+    "content": "Questo sito web offre informazioni, annunci e risorse relative al settore immobiliare. Tutte le informazioni sono fornite a solo scopo informativo e non costituiscono consulenza professionale."
+  },
+  "userResponsibilities": {
+    "title": "Responsabilità dell'Utente",
+    "content": "Accetti di utilizzare questo sito web solo per scopi legali. Sei responsabile dell'accuratezza di qualsiasi informazione inviata e accetti di non abusare delle informazioni fornite dal sito."
+  },
+  "intellectualProperty": {
+    "title": "Proprietà Intellettuale",
+    "content": "Tutti i contenuti di questo sito, inclusi testi, immagini e loghi, sono di proprietà di HarmonyHome o dei suoi licenziatari. Non puoi utilizzare alcun contenuto senza autorizzazione."
+  },
+  "limitationsOfLiability": {
+    "title": "Limitazioni di Responsabilità",
+    "content": "HarmonyHome non è responsabile per eventuali danni diretti o indiretti derivanti dall'uso del sito. Le informazioni sul sito potrebbero non essere sempre accurate, complete o aggiornate."
+  },
+  "links": {
+    "title": "Link ad Altri Siti",
+    "content": "Questo sito potrebbe contenere link a siti di terze parti. HarmonyHome non è responsabile del contenuto o delle pratiche di questi siti esterni."
+  },
+  "changes": {
+    "title": "Modifiche ai Termini",
+    "content": "Ci riserviamo il diritto di aggiornare questi Termini di Servizio in qualsiasi momento. L'uso continuato del sito costituisce accettazione di eventuali modifiche."
+  },
+  "governingLaw": {
+    "title": "Legge Applicabile",
+    "content": "Questi Termini di Servizio sono regolati dalle leggi dell'Italia."
+  },
+  "contactUs": {
+    "title": "Contattaci",
+    "content": "Per qualsiasi domanda riguardante questi Termini di Servizio, contattaci all'indirizzo: info@harmony-home.it ."
+  }
+}
