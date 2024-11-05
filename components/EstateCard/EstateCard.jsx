@@ -1,32 +1,27 @@
-import { Box, Badge, Icon, Flex, Text, Center, Divider } from '@chakra-ui/react'
+import { Box, Badge, Icon, Flex, Text, Center, Divider, SimpleGrid } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useEffect } from 'react'
-import { FaBed, FaBath, FaHome, FaUmbrellaBeach, FaBorderAll } from 'react-icons/fa'
+import { FaBed, FaBath, FaHome, FaUmbrellaBeach, FaBorderAll, FaMapMarkerAlt} from 'react-icons/fa'
 import Link from "next/link";
 
 
 export default function EstateCard({ property, t}) {
+
+  function formatPrice(price) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'EUR',
+      minimumFractionDigits: 0, // Adjust decimals if needed
+      maximumFractionDigits: 0
+    }).format(price);
+}
+
 
   useEffect(() => {
   }, []);
 
   const imageUrl = property.images[0].url;
 
-
-  /*const property = {
-    name: 'Property Name',
-    imageUrl: 'https://bit.ly/2Z4KKcF',
-    imageAlt: 'Rear view of modern home with pool',
-    beds: 3,
-    baths: 2,
-    title: 'Modern home in city center in the heart of historic Los Angeles',
-    formattedPrice: '1,900.00',
-    reviewCount: 34,
-    rating: 4,
-    rooms: 4,
-    sea_dist: 1500,
-    area: 300
-  } */
 
   return (
     <Box maxWidth={{base:"100%", sm:"400px"}} borderWidth='1px' borderRadius='lg' overflow='hidden'>
@@ -69,33 +64,54 @@ export default function EstateCard({ property, t}) {
           </Badge> */}
           <Flex
             color='gray.500'
-            fontWeight='semibold'
-            letterSpacing='wide'
+            fontWeight='medium'
             fontSize='sm'
             textTransform='uppercase'
             ml='2'
+            width="100%"
             flexWrap='wrap'
-            justifyContent='center'
+            justifyContent='space-between'
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
           >
-            <Box display='flex' paddingRight='3'>
-              <Box paddingRight='2'>
-                <FaBed size='20' />
+            <SimpleGrid columns={2} spacingY="2" spacingX="4" width={{base:"100%", sm:"400px"}}>
+              <Box display="flex" alignItems="center" justifyContent="flex-start" width="100%">
+                <Box paddingRight="2">
+                  <FaBed size="20" />
+                </Box>
+                <Box isTruncated>
+                  {property.bedrooms} {t('bedrooms')}
+                </Box>
               </Box>
-              {property.bedrooms} {t('bedrooms')} 
-            </Box>
-            <Box display='flex' paddingRight='3' >
-              <Box paddingRight='2' paddingLeft='1'>
-                <FaBath size='15' />
-              </Box>
-              {property.bathrooms} {t('bathrooms')} 
-            </Box>
-            <Box display='flex' paddingRight='3'>
-              <Box paddingRight='2' >
-                <FaBorderAll size='18' />
-              </Box>
-              {property.area} {t('area_sqm')} 
-            </Box>
 
+              <Box display="flex" alignItems="center" justifyContent="flex-start" width="100%">
+                <Box paddingRight="2">
+                  <FaBath size="15" />
+                </Box>
+                <Box isTruncated>
+                  {property.bathrooms} {t('bathrooms')}
+                </Box>
+              </Box>
+
+              <Box display="flex" alignItems="center" justifyContent="flex-start" width="100%">
+                <Box paddingRight="2">
+                  <FaMapMarkerAlt size="15" />
+                </Box>
+                <Box isTruncated>
+                  {property.location}
+                </Box>
+              </Box>
+
+              <Box display="flex" alignItems="center" justifyContent="flex-start" width="100%">
+                <Box paddingRight="2">
+                  <FaBorderAll size="18" />
+                </Box>
+                <Box isTruncated>
+                  {property.area} {t('area_sqm')}
+                </Box>
+              </Box>
+            </SimpleGrid>
           </Flex>
         </Box>
 
@@ -103,30 +119,9 @@ export default function EstateCard({ property, t}) {
 
         <Center paddingTop='2'>
           <Box>
-            € {property.price}
-            {
-              /*
-              <Box as='span' color='gray.600' fontSize='sm'>
-                / month
-              </Box>
-              */
-            }
+            {property.listing_type === 'rent' ? formatPrice(property.m_rate) : formatPrice(property.price)}
           </Box>
         </Center>
-
-        {/* <Box display='flex' mt='2' alignItems='center'>
-          {Array(5)
-            .fill('')
-            .map((_, i) => (
-              <StarIcon
-                key={i}
-                color={i < property.rating ? 'teal.500' : 'gray.300'}
-              />
-            ))}
-          <Box as='span' ml='2' color='gray.600' fontSize='sm'>
-            {property.reviewCount} reviews
-          </Box>
-        </Box> */}
       </Box>
     </Box>
   )
