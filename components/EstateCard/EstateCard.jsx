@@ -5,7 +5,7 @@ import { FaBed, FaBath, FaHome, FaUmbrellaBeach, FaBorderAll } from 'react-icons
 import Link from "next/link";
 
 
-export default function EstateCard({ property }) {
+export default function EstateCard({ property, t}) {
 
   useEffect(() => {
   }, []);
@@ -81,32 +81,19 @@ export default function EstateCard({ property }) {
               <Box paddingRight='2'>
                 <FaBed size='20' />
               </Box>
-              {property.beds} beds
+              {property.bedrooms} {t('bedrooms')} 
             </Box>
             <Box display='flex' paddingRight='3' >
               <Box paddingRight='2' paddingLeft='1'>
                 <FaBath size='15' />
               </Box>
-              {property.bathrooms} baths
-            </Box>
-            <Box display='flex' paddingRight='3'>
-              <Box paddingRight='2' paddingLeft='1'>
-                <FaHome size='18' />
-              </Box>
-              {property.rooms} rooms
-            </Box>
-            {/* SECOND ROW OF ICON PROPS */}
-            <Box display='flex' paddingRight='3'>
-              <Box paddingRight='2' >
-                <FaUmbrellaBeach size='18' />
-              </Box>
-              {property.sea_dist} m
+              {property.bathrooms} {t('bathrooms')} 
             </Box>
             <Box display='flex' paddingRight='3'>
               <Box paddingRight='2' >
                 <FaBorderAll size='18' />
               </Box>
-              {property.area} sq.m
+              {property.area} {t('area_sqm')} 
             </Box>
 
           </Flex>

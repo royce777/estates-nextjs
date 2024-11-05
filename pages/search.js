@@ -15,6 +15,7 @@ const Search = ({ properties }) => {
   const [searchFilters, setSearchFilters] = useState(false);
   const router = useRouter();
   const { t } = useTranslation('search');
+  const { t: tEstateCard } = useTranslation('estateCard');
 
 
   return (
@@ -54,7 +55,7 @@ const Search = ({ properties }) => {
             paddingLeft="5"
             paddingBottom="8"
           >
-            <EstateCard property={property} />
+            <EstateCard property={property} t={tEstateCard} />
           </Flex>
         ))}
       </Flex>
@@ -105,7 +106,7 @@ export async function getServerSideProps(context) {
     context.req.cookies.access_token_cookie
   );
 
-  const translations = await serverSideTranslations(context.locale, ['search']);
+  const translations = await serverSideTranslations(context.locale, ['search', 'estateCard']);
 
   //console.log("DATA: ");
   //console.log(data);
