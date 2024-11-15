@@ -1,6 +1,8 @@
-import { Box, Heading, Text, List, ListItem } from "@chakra-ui/react";
+import { Box, Heading, Text, List, ListItem, ListIcon } from "@chakra-ui/react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
+import { MdCheckCircleOutline } from "react-icons/md";
+
 
 export const getServerSideProps = async ({ locale }) => {
   return {
@@ -29,7 +31,10 @@ const About = () => {
       </Heading>
       <List spacing="3">
         {t("services_list", { returnObjects: true }).map((service, index) => (
-          <ListItem key={index}>{service}</ListItem>
+          <ListItem key={index}>
+            <ListIcon as={MdCheckCircleOutline} color='green.500' />
+            {service}
+          </ListItem>
         ))}
       </List>
 
