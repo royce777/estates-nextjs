@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { baseUrl, fetchApi, deleteEstate } from "../../utils/fetchApi";
+import { baseUrl, fetchApi, deleteEstate, postApi} from "../../utils/fetchApi";
 import { BsDoorClosed, BsCheck2Circle } from "react-icons/bs";
 import { FaExpand } from 'react-icons/fa';
 import {
@@ -23,7 +23,9 @@ import {
   FaPeriscope,
   FaUmbrellaBeach,
   FaUsers,
-  FaTrash
+  FaTrash,
+  FaRegHeart,
+  FaHeart
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useTranslation } from 'next-i18next';
@@ -50,6 +52,7 @@ const EstateDetails = ({
     floors,
     price,
     m_rate,
+    main_img_id,
     category,
     description,
     features,
@@ -82,6 +85,7 @@ const EstateDetails = ({
   {/*FULL SCREEN MODAL*/}
   const [isFullScreenOpen, setIsFullScreenOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [mainImage, setMainImage] = useState(main_img_id);
 
   const openFullscreen = (index) => {
     setCurrentIndex(index);
@@ -121,6 +125,17 @@ const EstateDetails = ({
     }
 
   };
+
+  const setMainImg = async (img_id) => {
+    const payload = {
+      "estate_id": id,
+      "main_img_id": img_id
+    }
+    const data = await postApi(`${baseUrl}/estates/update-main-img`, payload);
+    if(data.status === 200){
+      setMainImage(img_id);
+    }
+  }
 
   return (
     <>
@@ -167,7 +182,7 @@ const EstateDetails = ({
                         </AlertDialogHeader>
 
                         <AlertDialogBody>
-                          Are you sure? You can't undo this action afterwards.
+                          Are you sure? You cannot undo this action afterwards.
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
@@ -227,6 +242,15 @@ const EstateDetails = ({
                     colorScheme="gray"
                     variant="solid"
                   />
+                  {isAdmin && (
+                    <IconButton
+                      icon={img.id === mainImage ? <FaHeart /> : <FaRegHeart />}
+                      position="absolute"
+                      top="20px"
+                      left="80px"
+                      onClick={() => setMainImg(img.id)}
+                    />
+                  )}
                 </Container>
               ))}
             </Carousel>

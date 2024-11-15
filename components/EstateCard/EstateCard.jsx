@@ -14,13 +14,17 @@ export default function EstateCard({ property, t}) {
       minimumFractionDigits: 0, // Adjust decimals if needed
       maximumFractionDigits: 0
     }).format(price);
-}
+  }
+
+  var imageUrl = property.images.find(image => image.id === property.main_img_id)?.url;
+  if(!imageUrl){
+    imageUrl = property.images[0].url;
+  }
 
 
   useEffect(() => {
   }, []);
 
-  const imageUrl = property.images[0].url;
 
 
   return (
