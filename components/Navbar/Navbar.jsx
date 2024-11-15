@@ -113,6 +113,10 @@ export default function Navbar() {
       path: "/fdm"
     },
     {
+      name: t.about,
+      path: "/about",
+    },
+    {
       name: t.contact,
       path: "/contact",
     },

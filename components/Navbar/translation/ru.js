@@ -3,4 +3,5 @@ export default {
   search: "Поиск",
   fdm: "Форте дей Марми",
   contact: "Контакты",
+  about: "О компании",
 };
