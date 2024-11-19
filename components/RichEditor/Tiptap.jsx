@@ -41,12 +41,12 @@ const Tiptap = ({ name, placeholder, handleUpdate, initialValue = "" }) => {
       }),
       OrderedList.configure({
         HTMLAttributes: {
-          class: "list-decimal ml-3",
+          class: "chakra-ui-ordered-list",
         },
       }),
       BulletList.configure({
         HTMLAttributes: {
-          class: "list-disc ml-3",
+          class: "chakra-ui-unordered-list",
         },
       }),
       Highlight,
@@ -81,6 +81,14 @@ const Tiptap = ({ name, placeholder, handleUpdate, initialValue = "" }) => {
         '.h3-style': {
           fontSize: '1.3rem',
           fontWeight: 'bold',
+        },
+        '.chakra-ui-unordered-list': {
+          listStyleType: 'disc', // for ordered lists
+          marginLeft: '1rem',
+        },
+        '.chakra-ui-ordered-list': {
+          listStyleType: 'decimal', // for ordered lists
+          marginLeft: '1rem',
         },
         '.ProseMirror': {
           minHeight: '220px',

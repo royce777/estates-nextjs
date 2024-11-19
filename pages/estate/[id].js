@@ -32,6 +32,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { useUser } from '../../context/UserContext.js';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import DOMPurify from 'dompurify';
 
 const EstateDetails = ({
   estateDetails: {
@@ -136,6 +137,15 @@ const EstateDetails = ({
       setMainImage(img_id);
     }
   }
+
+  // sanitized html for description
+  const [sanitizedHTML, setSanitizedHTML] = useState('');
+
+  useEffect(() => {
+    let htmlContent = description.find(desc => desc.lang === locale)?.desc;
+    const sanitized = DOMPurify.sanitize(htmlContent);
+    setSanitizedHTML(sanitized);
+  }, [locale]);
 
   return (
     <>
@@ -347,15 +357,39 @@ const EstateDetails = ({
             rounded="lg"
             color="black"
             shadow="dark-lg"
-            textAlign="center"
           >
             {description.map((desc, index) => {
-              if (desc.lang === locale)
+              if (desc.lang === locale){
                 return (
-                  <Text p="3" key={index}>
-                    {desc.desc}
-                  </Text>
+                  <Text 
+                    css={{
+                      '.h1-style': {
+                        fontSize: '2rem',
+                        fontWeight: 'bold',
+                      },
+                      '.h2-style': {
+                        fontSize: '1.5rem',
+                        fontWeight: 'bold',
+                      },
+                      '.h3-style': {
+                        fontSize: '1.3rem',
+                        fontWeight: 'bold',
+                      },
+                      '.chakra-ui-unordered-list': {
+                        listStyleType: 'disc', // for ordered lists
+                        marginLeft: '1rem',
+                      },
+                      '.chakra-ui-ordered-list': {
+                        listStyleType: 'decimal', // for ordered lists
+                        marginLeft: '1rem',
+                      },
+                    }}
+                    p="3"
+                    key={index}
+                    dangerouslySetInnerHTML={{ __html: sanitizedHTML}}
+                  />
                 );
+              }
             })}
           </Box>
           <Text p="5" fontSize="lg" fontWeight="bold">

@@ -5,6 +5,7 @@ export default function ToolbarIconButton({ isActive, onToggle, icon }) {
     <IconButton
       onClick={onToggle}
       icon={icon}
+      margin='0.5'
       aria-label="Toggle Bold" // Accessibility
       size="sm"
       colorScheme={isActive ? "blue" : "gray"}
