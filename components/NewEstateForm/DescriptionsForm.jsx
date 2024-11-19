@@ -5,6 +5,7 @@ import {
   SimpleGrid,
   Textarea,
 } from "@chakra-ui/react";
+import Tiptap from '../RichEditor/Tiptap'
 import { useState } from "react";
 
 export default function DescriptionsForm({handleDescriptionsChange}){
@@ -32,45 +33,41 @@ export default function DescriptionsForm({handleDescriptionsChange}){
         <Box>
           <FormControl>
             <FormLabel htmlFor="descr-en">Description-EN</FormLabel>
-            <Textarea
-              height="200px"
+            <Tiptap
               placeholder="Insert description in English."
               name="descr-en"
-              onBlur={handleDescriptionsChange}
-            ></Textarea>
+              handleUpdate={handleDescriptionsChange}
+            ></Tiptap>
           </FormControl>
         </Box>
         <Box>
           <FormControl>
             <FormLabel htmlFor="descr-ru">Description-RUS</FormLabel>
-            <Textarea
-              height="200px"
+            <Tiptap
               placeholder="Insert description in Russian."
               name="descr-ru"
-              onBlur={handleDescriptionsChange}
-            ></Textarea>
+              handleUpdate={handleDescriptionsChange}
+            ></Tiptap>
           </FormControl>
         </Box>
         <Box>
           <FormControl>
             <FormLabel htmlFor="descr-it">Description-ITA</FormLabel>
-            <Textarea
-              height="200px"
+            <Tiptap
               placeholder="Insert description in Italian."
               name="descr-it"
-              onBlur={handleDescriptionsChange}
-            ></Textarea>
+              handleUpdate={handleDescriptionsChange}
+            ></Tiptap>
           </FormControl>
         </Box>
         <Box>
           <FormControl>
             <FormLabel htmlFor="descr-uk">Description-UKR</FormLabel>
-            <Textarea
-              height="200px"
+            <Tiptap
               placeholder="Insert description in Ukrainian."
               name="descr-uk"
-              onBlur={handleDescriptionsChange}
-            ></Textarea>
+              handleUpdate={handleDescriptionsChange}
+            ></Tiptap>
           </FormControl>
         </Box>
       </SimpleGrid>
