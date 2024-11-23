@@ -16,6 +16,18 @@
     "Real Estate Investments",
     "Renovation Estimates"
   ],
-  "conclusion": "We are here to help you realize your real estate dreams in the beautiful Versilia!"
+  "conclusion": "We are here to help you realize your real estate dreams in the beautiful Versilia!",
+  "reviews": "Reviews",
+  "add_review": "Add review",
+  "add_your_review": "Add your review",
+  "your_review": "Your review",
+  "name": "Name",
+  "your_name": "Your name",
+  "email": "Email",
+  "your_email": "Your email",
+  "stars": "Stars",
+  "message": "Message",
+  "your_message": "Your message",
+  "submit" : "Submit"
 }
 

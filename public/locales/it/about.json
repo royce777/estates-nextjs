@@ -16,6 +16,18 @@
     "Investimenti Immobiliari",
     "Preventivi per Ristrutturazioni Immobiliari"
   ],
-  "conclusion": "Siamo qui per aiutarvi a realizzare i vostri sogni immobiliari nella splendida Versilia!"
+  "conclusion": "Siamo qui per aiutarvi a realizzare i vostri sogni immobiliari nella splendida Versilia!",
+  "reviews": "Recensioni",
+  "add_review": "Aggiungi recensione",
+  "add_your_review": "Aggiungi la tua recensione",
+  "your_review": "La tua recensione",
+  "name": "Nome",
+  "your_name": "Il tuo nome",
+  "email": "Email",
+  "your_email": "La tua email",
+  "stars": "Stelle",
+  "message": "Messaggio",
+  "your_message": "Il tuo messaggio",
+  "submit": "Invia"
 }
 

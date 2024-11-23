@@ -14,7 +14,7 @@ import {
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 
-const ReviewForm = ({ onSubmit, url }) => {
+const ReviewForm = ({ onSubmit, t }) => {
   const [newReview, setNewReview] = useState({
     name: "",
     email: "",
@@ -45,12 +45,12 @@ const ReviewForm = ({ onSubmit, url }) => {
   return (
     <Box mt={8}>
       <Text fontSize="xl" fontWeight="bold" mb={4}>
-        Add a Review
+        {t('your_review')}
       </Text>
       <form onSubmit={handleSubmit}>
         <VStack spacing={4} align="stretch">
           <FormControl isRequired>
-            <FormLabel>Name</FormLabel>
+            <FormLabel>{t('name')}</FormLabel>
             <Input
               name="name"
               value={newReview.name}
@@ -60,11 +60,11 @@ const ReviewForm = ({ onSubmit, url }) => {
                   name: e.target.value,
                 }))
               }
-              placeholder="Your name"
+              placeholder={t("your_name")}
             />
           </FormControl>
           <FormControl isRequired>
-            <FormLabel>Email</FormLabel>
+            <FormLabel>{t('email')}</FormLabel>
             <Input
               name="email"
               value={newReview.email}
@@ -74,11 +74,11 @@ const ReviewForm = ({ onSubmit, url }) => {
                   email: e.target.value,
                 }))
               }
-              placeholder="Your email"
+              placeholder={t('your_email')}
             />
           </FormControl>
           <FormControl isRequired>
-            <FormLabel>Stars</FormLabel>
+            <FormLabel>{t('stars')}</FormLabel>
             <HStack>
               {Array.from({ length: 5 }).map((_, i) => (
                 <Icon
@@ -93,7 +93,7 @@ const ReviewForm = ({ onSubmit, url }) => {
             </HStack>
           </FormControl>
           <FormControl isRequired>
-            <FormLabel>Message</FormLabel>
+            <FormLabel>{t("message")}</FormLabel>
             <Textarea
               name="message"
               value={newReview.message}
@@ -103,11 +103,11 @@ const ReviewForm = ({ onSubmit, url }) => {
                   message: e.target.value,
                 }))
               }
-              placeholder="Your review"
+              placeholder={t("your_message")}
             />
           </FormControl>
           <Button type="submit" colorScheme="blue" width="full">
-            Submit
+            {t('submit')}
           </Button>
         </VStack>
       </form>

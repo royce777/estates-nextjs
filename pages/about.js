@@ -2,6 +2,8 @@ import {
   Box,
   Heading,
   Button,
+  Divider,
+  Flex,
   Text,
   FormControl,
   FormLabel,
@@ -13,7 +15,15 @@ import {
   VStack,
   HStack,
   Icon,
-  useToast
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  useToast,
+  useDisclosure
 } from "@chakra-ui/react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
@@ -22,20 +32,22 @@ import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 import ReviewCard from '../components/ReviewCard/ReviewCard';
 import ReviewForm from '../components/ReviewForm/ReviewForm';
-import { postApiContact, baseUrl } from '../utils/fetchApi.js';
+import { postApiContact, baseUrl, fetchApi } from '../utils/fetchApi.js';
 
 
 
 export const getServerSideProps = async ({ locale }) => {
+  const data = await fetchApi(`${baseUrl}/reviews/get-public`);
   return {
     props: {
       ...(await serverSideTranslations(locale, ["about"])),
+      reviews : data ? data.reviews :  []
     },
   };
 };
 
 
-  const reviews = [
+  const reviews_static = [
   {
     name: "Alice Johnson",
     email: "alice@example.com",
@@ -78,10 +90,11 @@ export const getServerSideProps = async ({ locale }) => {
   },
 ];
 
-const About = () => {
+const About = ({ reviews }) => {
   const { t } = useTranslation("about");
 
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const displayToast = (success) => {
     if(success){
@@ -108,6 +121,7 @@ const About = () => {
     const res = await postApiContact(baseUrl + "/review", newReview);
     if(res?.status === 200){
       displayToast(true);
+      onClose();
     }
     else{
       displayToast(false)
@@ -140,9 +154,18 @@ const About = () => {
       </List>
 
       <Text mt="6">{t("conclusion")}</Text>
-      <Text fontSize="2xl" fontWeight="bold" mb={6}>
-        Reviews
-      </Text>
+
+      <Divider margin="10" />
+
+      <Flex justify="space-between" align="center" mb={6}>
+        <Text fontSize="2xl" fontWeight="bold">
+          {t("reviews")}
+        </Text>
+        <Button colorScheme="blue" onClick={onOpen}>
+          {t("add_review")}
+        </Button>
+      </Flex>
+
       <VStack spacing={4} align="stretch">
         {reviews.map((review, index) => (
           <ReviewCard
@@ -151,9 +174,20 @@ const About = () => {
           />
         ))}
       </VStack>
-      <ReviewForm
-        onSubmit={handleReviewSubmit}
-      />
+      {/* Modal for Review Form */}
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>{t('add_your_review')}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <ReviewForm
+              onSubmit={handleReviewSubmit}
+              t={t}
+            />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
 
   );
