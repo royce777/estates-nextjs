@@ -23,19 +23,25 @@ export const fetchApi = async (url, token) => {
   }
 };
 
-export const postApi = async (url, estate_data) => {
-  const response = await axios.post(url, estate_data, { withCredentials: true });
-  return response;
-};
-
-export const deleteEstate = async (url, estate_id) => {
-  const response = await axios.delete(url, {withCredentials: true});
+export const deleteApi = async (url, withCredentials) => {
+  const response = await axios.delete(url, {withCredentials: withCredentials});
   return response;
 }
 
-export const postApiContact = async (url, formData) => {
+export const postApi = async (url, data, withCredentials) => {
   try {
-    const response = await axios.post(url, formData);
+    const response = await axios.post(url, data, {withCredentials: withCredentials});
+    return response;
+  }
+  catch (error) {
+    console.log("Network error");
+    return undefined;
+  }
+};
+
+export const putApi = async (url, data, withCredentials) => {
+  try {
+    const response = await axios.put(url, data, {withCredentials: withCredentials});
     return response;
   }
   catch (error) {

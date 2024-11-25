@@ -13,7 +13,7 @@ export const UserProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await postApi(`${baseUrl}/logout`);
+      await postApi(`${baseUrl}/logout`, {}, true);
 
     } catch (error) {
       console.error('Logout failed:', error);

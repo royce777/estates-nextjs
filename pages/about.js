@@ -32,7 +32,7 @@ import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 import ReviewCard from '../components/ReviewCard/ReviewCard';
 import ReviewForm from '../components/ReviewForm/ReviewForm';
-import { postApiContact, baseUrl, fetchApi } from '../utils/fetchApi.js';
+import { postApi, baseUrl, fetchApi } from '../utils/fetchApi.js';
 
 
 
@@ -118,7 +118,7 @@ const About = ({ reviews }) => {
   }
 
   const handleReviewSubmit = async (newReview) => {
-    const res = await postApiContact(baseUrl + "/review", newReview);
+    const res = await postApi(baseUrl + "/review", newReview, false);
     if(res?.status === 200){
       displayToast(true);
       onClose();

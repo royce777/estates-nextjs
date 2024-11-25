@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { baseUrl, fetchApi, deleteEstate, postApi} from "../../utils/fetchApi";
+import { baseUrl, fetchApi, deleteApi, postApi} from "../../utils/fetchApi";
 import { BsDoorClosed, BsCheck2Circle } from "react-icons/bs";
 import { FaExpand } from 'react-icons/fa';
 import {
@@ -100,8 +100,7 @@ const EstateDetails = ({
 
   const handleDelete = async () => {
     onClose();
-    console.log(baseUrl + `/estates/${id}`);
-    const response = await deleteEstate(baseUrl + `/estates/${id}`);
+    const response = await deleteApi(baseUrl + `/estates/${id}`, true);
     if(response.status === 200){
       toast({
         title: 'Success',

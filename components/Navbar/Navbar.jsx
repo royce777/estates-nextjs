@@ -154,6 +154,7 @@ export default function Navbar() {
                 </MenuButton>
                 <MenuList>
                   <MenuItem onClick={() => router.push("/newestate")}>New</MenuItem>
+                  <MenuItem onClick={() => router.push("/dashboard")}>Dashboard</MenuItem>
                   <MenuItem onClick={async () => {
                     await logout();
                     router.push("/");

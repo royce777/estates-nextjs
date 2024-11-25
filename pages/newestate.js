@@ -250,7 +250,7 @@ export default function Newestate() {
       mainProps.description = descriptions;
       mainProps.features = extraFeatures;
       mainProps.images = images;
-      const response = await postApi(`${baseUrl}/estates/0`, mainProps);
+      const response = await postApi(`${baseUrl}/estates/0`, mainProps, true);
       if (response.status === 201){
         window.location.href = `estate/${response.data.id}`;
         toast({

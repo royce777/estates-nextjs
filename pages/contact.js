@@ -5,7 +5,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaMapMarkerAlt, FaEnvelope, FaPhone } from "react-icons/fa";
-import { postApiContact, baseUrl } from "../utils/fetchApi";
+import { postApi, baseUrl } from "../utils/fetchApi";
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
@@ -89,7 +89,7 @@ export default function Contact() {
         email: email,
         message: message
       }
-      const result = await postApiContact(baseUrl + "/contact", formData);
+      const result = await postApi(baseUrl + "/contact", formData, false);
       if (result && result.status === 200) {
         cleanUpForm();
         toast({
