@@ -14,6 +14,7 @@ export default function DescriptionsForm({handleDescriptionsChange}){
     return(
       <SimpleGrid
         spacing={10}
+        marginBottom={10}
         paddingRight={{
           base: "40px",
           sm: "50px",
@@ -30,7 +31,7 @@ export default function DescriptionsForm({handleDescriptionsChange}){
         }}
         columns={{sm: 1, md: 1, lg: 2}}
       >
-        <Box>
+        <Box marginY="30px">
           <FormControl>
             <FormLabel htmlFor="descr-en">Description-EN</FormLabel>
             <Tiptap
@@ -40,7 +41,7 @@ export default function DescriptionsForm({handleDescriptionsChange}){
             ></Tiptap>
           </FormControl>
         </Box>
-        <Box>
+        <Box marginY="30px">
           <FormControl>
             <FormLabel htmlFor="descr-ru">Description-RUS</FormLabel>
             <Tiptap
@@ -50,7 +51,7 @@ export default function DescriptionsForm({handleDescriptionsChange}){
             ></Tiptap>
           </FormControl>
         </Box>
-        <Box>
+        <Box marginY="30px">
           <FormControl>
             <FormLabel htmlFor="descr-it">Description-ITA</FormLabel>
             <Tiptap
@@ -60,7 +61,7 @@ export default function DescriptionsForm({handleDescriptionsChange}){
             ></Tiptap>
           </FormControl>
         </Box>
-        <Box>
+        <Box marginY="30px">
           <FormControl>
             <FormLabel htmlFor="descr-uk">Description-UKR</FormLabel>
             <Tiptap

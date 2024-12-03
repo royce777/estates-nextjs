@@ -12,7 +12,7 @@ const MySlider = ({t}) => {
         <Carousel infiniteLoop autoPlay showThumbs={false} swipeable={false} dynamicHeight={true}>
         {MySliderData.images.map((slide, index) => (
                 <Box key={index} >
-                        <Image src={slide.url} height="1000px" width="1920px" fit='none'/>
+                        <Image src={slide.url} height="1000px" width="1920px" fit='cover'/>
                 </Box> 
         ))}
         </Carousel>
