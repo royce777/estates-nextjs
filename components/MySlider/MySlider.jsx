@@ -18,9 +18,22 @@ const MySlider = ({t}) => {
         </Carousel>
         <Box width='100%' position='absolute'>
             <Center>
-            <Text fontSize='50px' color='white' align='center'>
-             {t('home:welcome_msg', {app_name: 'HarmonyHome'})} 
-            </Text>
+               <Box
+                position="relative"
+                shadow="0px 0px 10px 10px rgba(0, 0, 0, .82)"
+                background="rgba(0, 0, 0, 0.8)"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                marginBottom={10}
+              >
+                <Image
+                  src="/images/hh-logo-2.png"
+                  alt="Logo"
+                  width="400px"
+                  height="auto"
+                />
+              </Box>
             </Center>
             <Center> 
                 <Button height='80px' margin='3px' colorScheme='blackAlpha' bgColor='black' onClick={() => router.push('/search')}>
