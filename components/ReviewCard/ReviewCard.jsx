@@ -1,8 +1,17 @@
 import { Box, HStack, Text, Icon } from '@chakra-ui/react';
 import { FaStar } from 'react-icons/fa';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ReviewCard = ({ review }) => {
+
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    console.log('review card useEffect');
+    setTime(
+      new Date(review.timestamp).toLocaleString()
+    );
+  }, [])
 
   return (
     <Box
@@ -28,7 +37,7 @@ const ReviewCard = ({ review }) => {
         {review.message}
       </Text>
       <Text fontSize="sm" mt={2} color="gray.500">
-        {new Date(review.timestamp).toLocaleString()}
+        {time}
       </Text>
     </Box>
   );
