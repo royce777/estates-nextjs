@@ -41,13 +41,13 @@ export const getServerSideProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale, ["about"])),
-      reviews : data ? data.reviews :  []
+      reviews: data ? data.reviews : []
     },
   };
 };
 
 
-  const reviews_static = [
+const reviews_static = [
   {
     name: "Alice Johnson",
     email: "alice@example.com",
@@ -97,7 +97,7 @@ const About = ({ reviews }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const displayToast = (success) => {
-    if(success){
+    if (success) {
       toast({
         title: 'Success',
         description: "Success!",
@@ -106,7 +106,7 @@ const About = ({ reviews }) => {
         isClosable: true,
       });
     }
-    else{
+    else {
       toast({
         title: 'Error',
         description: "Error!",
@@ -119,11 +119,11 @@ const About = ({ reviews }) => {
 
   const handleReviewSubmit = async (newReview) => {
     const res = await postApi(baseUrl + "/review", newReview, false);
-    if(res?.status === 200){
+    if (res?.status === 200) {
       displayToast(true);
       onClose();
     }
-    else{
+    else {
       displayToast(false)
     }
     return res;
@@ -131,7 +131,11 @@ const About = ({ reviews }) => {
 
 
   return (
-    <Box padding="4" maxWidth="800px" margin="auto">
+    <Box
+      padding="4"
+      margin="auto"
+      maxWidth={{ base: "100%", sm: '480px', md: '600px', lg: '1000px' }}
+    >
       <Heading as="h1" size="lg" mb="6" mt="20">
         {t("title")}
       </Heading>
@@ -155,7 +159,9 @@ const About = ({ reviews }) => {
 
       <Text mt="6">{t("conclusion")}</Text>
 
-      <Divider margin="10" />
+      <Divider
+        marginY="10"
+      />
 
       <Flex justify="space-between" align="center" mb={6}>
         <Text fontSize="2xl" fontWeight="bold">
